@@ -1,6 +1,11 @@
 import React, { useCallback, useContext } from "react";
 
-import { BG_COLOR, BORDER_COLOR, BUTTON_COLOR, RING_COLOR } from "../constants";
+import {
+    DEFAULT_BG_COLOR,
+    DEFAULT_BORDER_COLOR,
+    DEFAULT_BUTTON_COLOR,
+    DEFAULT_RING_COLOR
+} from "../constants";
 import DatepickerContext from "../contexts/DatepickerContext";
 
 interface IconProps {
@@ -129,13 +134,15 @@ export const Arrow = React.forwardRef<HTMLDivElement, {}>((props, ref) => {
 
 export const SecondaryButton: React.FC<Button> = ({ children, onClick, disabled = false }) => {
     // Contexts
-    const { primaryColor } = useContext(DatepickerContext);
+    const { configs, primaryColor } = useContext(DatepickerContext);
 
     // Functions
     const getClassName: () => string = useCallback(() => {
-        const ringColor = RING_COLOR.focus[primaryColor as keyof typeof RING_COLOR.focus];
+        const ringColor = (configs?.colors?.ring ?? DEFAULT_RING_COLOR).focus[
+            primaryColor as keyof typeof DEFAULT_RING_COLOR.focus
+        ];
         return `w-full transition-all duration-300 bg-white dark:text-gray-700 font-medium border border-gray-300 px-4 py-2 text-sm rounded-md focus:ring-2 focus:ring-offset-2 hover:bg-gray-50 ${ringColor}`;
-    }, [primaryColor]);
+    }, [primaryColor, configs?.colors?.ring]);
 
     return (
         <button type="button" className={getClassName()} onClick={onClick} disabled={disabled}>
@@ -146,11 +153,19 @@ export const SecondaryButton: React.FC<Button> = ({ children, onClick, disabled 
 
 export const PrimaryButton: React.FC<Button> = ({ children, onClick, disabled = false }) => {
     // Contexts
-    const { primaryColor } = useContext(DatepickerContext);
-    const bgColor = BG_COLOR["500"][primaryColor as keyof (typeof BG_COLOR)["500"]];
-    const borderColor = BORDER_COLOR["500"][primaryColor as keyof (typeof BORDER_COLOR)["500"]];
-    const bgColorHover = BG_COLOR.hover[primaryColor as keyof typeof BG_COLOR.hover];
-    const ringColor = RING_COLOR.focus[primaryColor as keyof typeof RING_COLOR.focus];
+    const { configs, primaryColor } = useContext(DatepickerContext);
+    const bgColor = (configs?.colors?.bg ?? DEFAULT_BG_COLOR)["500"][
+        primaryColor as keyof (typeof DEFAULT_BG_COLOR)["500"]
+    ];
+    const borderColor = (configs?.colors?.border ?? DEFAULT_BORDER_COLOR)["500"][
+        primaryColor as keyof (typeof DEFAULT_BORDER_COLOR)["500"]
+    ];
+    const bgColorHover = (configs?.colors?.bg ?? DEFAULT_BG_COLOR).hover[
+        primaryColor as keyof typeof DEFAULT_BG_COLOR.hover
+    ];
+    const ringColor = (configs?.colors?.ring ?? DEFAULT_RING_COLOR).focus[
+        primaryColor as keyof typeof DEFAULT_RING_COLOR.focus
+    ];
 
     // Functions
     const getClassName = useCallback(() => {
@@ -173,7 +188,7 @@ export const RoundedButton: React.FC<Button> = ({
     padding = "py-[0.55rem]"
 }) => {
     // Contexts
-    const { primaryColor } = useContext(DatepickerContext);
+    const { configs, primaryColor } = useContext(DatepickerContext);
 
     // Functions
     const getClassName = useCallback(() => {
@@ -181,10 +196,11 @@ export const RoundedButton: React.FC<Button> = ({
         const defaultClass = !roundedFull
             ? `w-full tracking-wide ${darkClass} transition-all duration-300 px-3 ${padding} uppercase hover:bg-gray-100 rounded-md focus:ring-1`
             : `${darkClass} transition-all duration-300 hover:bg-gray-100 rounded-full p-[0.45rem] focus:ring-1`;
-        const buttonFocusColor =
-            BUTTON_COLOR.focus[primaryColor as keyof typeof BUTTON_COLOR.focus];
+        const buttonFocusColor = (configs?.colors?.button ?? DEFAULT_BUTTON_COLOR).focus[
+            primaryColor as keyof typeof DEFAULT_BUTTON_COLOR.focus
+        ];
         return `${defaultClass} ${buttonFocusColor}`;
-    }, [padding, primaryColor, roundedFull]);
+    }, [padding, primaryColor, roundedFull, configs?.colors?.button]);
 
     return (
         <button type="button" className={getClassName()} onClick={onClick}>
@@ -195,8 +211,10 @@ export const RoundedButton: React.FC<Button> = ({
 
 export const VerticalDash = () => {
     // Contexts
-    const { primaryColor } = useContext(DatepickerContext);
-    const bgColor = BG_COLOR["500"][primaryColor as keyof (typeof BG_COLOR)["500"]];
+    const { configs, primaryColor } = useContext(DatepickerContext);
+    const bgColor = (configs?.colors?.bg ?? DEFAULT_BG_COLOR)["500"][
+        primaryColor as keyof (typeof DEFAULT_BG_COLOR)["500"]
+    ];
 
     return <div className={`bg-blue-500 h-7 w-1 rounded-full hidden md:block ${bgColor}`} />;
 };

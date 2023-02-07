@@ -44,7 +44,7 @@ interface DatepickerStore {
     disabledDates?: DateRangeType[] | null;
     inputId?: string;
     inputName?: string;
-    classNames?: ClassNamesTypeProp | undefined;
+    classNames?: Partial<ClassNamesTypeProp> | undefined;
 }
 
 const DatepickerContext = createContext<DatepickerStore>({

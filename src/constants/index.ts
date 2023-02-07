@@ -1,8 +1,9 @@
 import dayjs from "dayjs";
 
-import { formatDate, previousMonth } from "../helpers";
+import { formatDate, previousMonth } from "helpers";
+import { DPBGColor, DPBorderColor, DPButtonColor, DPColors, DPRingColor, DPTextColor } from "types";
 
-export const COLORS = [
+export const DEFAULT_COLORS: DPColors = [
     "blue",
     "orange",
     "yellow",
@@ -27,7 +28,7 @@ export const DEFAULT_COLOR = "blue";
 
 // Beware, these maps of colors cannot be replaced with functions using string interpolation such as `bg-${color}-100`
 // as described in Tailwind documentation https://tailwindcss.com/docs/content-configuration#dynamic-class-names
-export const BG_COLOR = {
+export const DEFAULT_BG_COLOR: DPBGColor = {
     100: {
         blue: "bg-blue-100",
         orange: "bg-orange-100",
@@ -106,7 +107,7 @@ export const BG_COLOR = {
     }
 };
 
-export const TEXT_COLOR = {
+export const DEFAULT_TEXT_COLOR: DPTextColor = {
     500: {
         blue: "text-blue-500",
         orange: "text-orange-500",
@@ -166,7 +167,7 @@ export const TEXT_COLOR = {
     }
 };
 
-export const BORDER_COLOR = {
+export const DEFAULT_BORDER_COLOR: DPBorderColor = {
     500: {
         blue: "border-blue-500",
         orange: "border-orange-500",
@@ -207,7 +208,7 @@ export const BORDER_COLOR = {
     }
 };
 
-export const RING_COLOR = {
+export const DEFAULT_RING_COLOR: DPRingColor = {
     focus: {
         blue: "focus:ring-blue-500",
         orange: "focus:ring-orange-500",
@@ -248,7 +249,7 @@ export const RING_COLOR = {
     }
 };
 
-export const BUTTON_COLOR = {
+export const DEFAULT_BUTTON_COLOR: DPButtonColor = {
     focus: {
         blue: "focus:ring-blue-500/50 focus:bg-blue-100/50",
         orange: "focus:ring-orange-500/50 focus:bg-orange-100/50",

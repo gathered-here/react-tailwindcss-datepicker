@@ -5,11 +5,18 @@ import Calendar from "../components/Calendar";
 import Footer from "../components/Footer";
 import Input from "../components/Input";
 import Shortcuts from "../components/Shortcuts";
-import { COLORS, DEFAULT_COLOR } from "../constants";
+import { DEFAULT_COLOR, DEFAULT_COLORS } from "../constants";
 import DatepickerContext from "../contexts/DatepickerContext";
 import { formatDate, nextMonth, previousMonth } from "../helpers";
 import useOnClickOutside from "../hooks";
-import { Period, DateValueType, DateType, DateRangeType, ClassNamesTypeProp } from "../types";
+import {
+    ClassNamesTypeProp,
+    Configs,
+    DateRangeType,
+    DateType,
+    DateValueType,
+    Period
+} from "../types";
 
 import { Arrow, VerticalDash } from "./utils";
 
@@ -20,19 +27,7 @@ interface Props {
     useRange?: boolean;
     showFooter?: boolean;
     showShortcuts?: boolean;
-    configs?: {
-        shortcuts?: {
-            today?: string;
-            yesterday?: string;
-            past?: (period: number) => string;
-            currentMonth?: string;
-            pastMonth?: string;
-        } | null;
-        footer?: {
-            cancel?: string;
-            apply?: string;
-        } | null;
-    } | null;
+    configs?: Configs | null;
     asSingle?: boolean;
     placeholder?: string;
     separator?: string;
@@ -263,11 +258,11 @@ const Datepicker: React.FC<Props> = ({
 
     // Variable
     const colorPrimary = useMemo(() => {
-        if (COLORS.includes(primaryColor)) {
+        if ((configs?.colors?.custom ?? DEFAULT_COLORS).includes(primaryColor)) {
             return primaryColor;
         }
         return DEFAULT_COLOR;
-    }, [primaryColor]);
+    }, [primaryColor, configs?.colors?.custom]);
     const contextValues = useMemo(() => {
         return {
             asSingle,
@@ -353,7 +348,7 @@ const Datepicker: React.FC<Props> = ({
                     <Arrow ref={arrowRef} />
 
                     <div className="mt-2.5 shadow-sm border border-gray-300 px-1 py-0.5 bg-white dark:bg-slate-800 dark:text-white dark:border-slate-600 rounded-lg">
-                        <div className="flex flex-col lg:flex-row py-2">
+                        <div className="flex flex-col py-2 lg:flex-row">
                             {showShortcuts && <Shortcuts />}
 
                             <div

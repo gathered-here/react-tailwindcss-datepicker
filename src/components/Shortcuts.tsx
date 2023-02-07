@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import React, { useCallback, useContext } from "react";
 
-import { DEFAULT_SHORTCUTS, TEXT_COLOR } from "../constants";
+import { DEFAULT_SHORTCUTS, DEFAULT_TEXT_COLOR } from "../constants";
 import DatepickerContext from "../contexts/DatepickerContext";
 import { Period, ShortcutsItem } from "../types";
 
@@ -14,6 +14,7 @@ interface ItemTemplateProps {
 // eslint-disable-next-line react/display-name
 const ItemTemplate = React.memo((props: ItemTemplateProps) => {
     const {
+        configs,
         primaryColor,
         period,
         changePeriod,
@@ -27,10 +28,14 @@ const ItemTemplate = React.memo((props: ItemTemplateProps) => {
 
     // Functions
     const getClassName: () => string = useCallback(() => {
-        const textColor = TEXT_COLOR["600"][primaryColor as keyof (typeof TEXT_COLOR)["600"]];
-        const textColorHover = TEXT_COLOR.hover[primaryColor as keyof typeof TEXT_COLOR.hover];
+        const textColor = (configs?.colors?.text ?? DEFAULT_TEXT_COLOR)["600"][
+            primaryColor as keyof (typeof DEFAULT_TEXT_COLOR)["600"]
+        ];
+        const textColorHover = (configs?.colors?.text ?? DEFAULT_TEXT_COLOR).hover[
+            primaryColor as keyof typeof DEFAULT_TEXT_COLOR.hover
+        ];
         return `whitespace-nowrap w-1/2 md:w-1/3 lg:w-auto transition-all duration-300 hover:bg-gray-100 dark:hover:bg-white/10 p-2 rounded cursor-pointer ${textColor} ${textColorHover}`;
-    }, [primaryColor]);
+    }, [primaryColor, configs?.colors?.text]);
 
     const chosePeriod = useCallback(
         (item: Period) => {
@@ -98,8 +103,8 @@ const Shortcuts = () => {
     };
 
     return (
-        <div className="md:border-b mb-3 lg:mb-0 lg:border-r lg:border-b-0 border-gray-300 dark:border-gray-700 pr-1">
-            <ul className="w-full tracking-wide flex flex-wrap lg:flex-col pb-1 lg:pb-0">
+        <div className="pr-1 mb-3 border-gray-300 md:border-b lg:mb-0 lg:border-r lg:border-b-0 dark:border-gray-700">
+            <ul className="flex flex-wrap w-full pb-1 tracking-wide lg:flex-col lg:pb-0">
                 {Object.entries(DEFAULT_SHORTCUTS).map(([key, item], index) =>
                     key === "past" ? (
                         (Array.isArray(item) ? item : []).map((item, index) => (

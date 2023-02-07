@@ -1,20 +1,44 @@
+export type DPColors = string[];
+export type DPColorToClass = { [color: string]: string };
+export type DPColorToClassMap<T extends string | number | symbol> = {
+    [shade in T]: DPColorToClass;
+};
+
+export type DPBGColor = DPColorToClassMap<100 | 200 | 500 | "hover">;
+export type DPTextColor = DPColorToClassMap<500 | 600 | "hover">;
+export type DPBorderColor = DPColorToClassMap<500 | "focus">;
+export type DPRingColor = DPColorToClassMap<"focus" | "second-focus">;
+export type DPButtonColor = DPColorToClassMap<"focus">;
+
 export interface Period {
     start: string | null;
     end: string | null;
 }
 
+export interface DatePickerShortcuts {
+    today?: string;
+    yesterday?: string;
+    past?: (period: number) => string;
+    currentMonth?: string;
+    pastMonth?: string;
+}
+
+export interface DatePickerFooter {
+    cancel?: string;
+    apply?: string;
+}
+
 export interface Configs {
-    shortcuts?: {
-        today?: string;
-        yesterday?: string;
-        past?: (period: number) => string;
-        currentMonth?: string;
-        pastMonth?: string;
-    } | null;
-    footer?: {
-        cancel?: string;
-        apply?: string;
-    } | null;
+    shortcuts?: DatePickerShortcuts | null;
+    footer?: DatePickerFooter | null;
+    colors?: Partial<{
+        bg: DPBGColor;
+        border: DPBorderColor;
+        button: DPButtonColor;
+        custom: DPColors;
+        ring: DPRingColor;
+        text: DPTextColor;
+    }>;
 }
 
 export interface ShortcutsItem {

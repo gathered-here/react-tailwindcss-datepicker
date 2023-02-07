@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import React, { useCallback, useContext, useEffect, useRef } from "react";
 
-import { BORDER_COLOR, RING_COLOR } from "../constants";
+import { DEFAULT_BORDER_COLOR, DEFAULT_RING_COLOR } from "../constants";
 import DatepickerContext from "../contexts/DatepickerContext";
 import { dateIsValid } from "../helpers";
 
@@ -14,6 +14,7 @@ type Props = {
 const Input: React.FC<Props> = (e: Props) => {
     // Context
     const {
+        configs,
         primaryColor,
         period,
         dayHover,
@@ -56,12 +57,22 @@ const Input: React.FC<Props> = (e: Props) => {
             return classNames?.input(input);
         }
 
-        const border = BORDER_COLOR.focus[primaryColor as keyof typeof BORDER_COLOR.focus];
-        const ring =
-            RING_COLOR["second-focus"][primaryColor as keyof (typeof RING_COLOR)["second-focus"]];
+        const border = (configs?.colors?.border ?? DEFAULT_BORDER_COLOR).focus[
+            primaryColor as keyof typeof DEFAULT_BORDER_COLOR.focus
+        ];
+        const ring = (configs?.colors?.ring ?? DEFAULT_RING_COLOR)["second-focus"][
+            primaryColor as keyof (typeof DEFAULT_RING_COLOR)["second-focus"]
+        ];
         const classNameOverload = typeof inputClassName === "string" ? inputClassName : "";
         return `relative transition-all duration-300 py-2.5 pl-4 pr-14 w-full border-gray-300 dark:bg-slate-800 dark:text-white/80 dark:border-slate-600 rounded-lg tracking-wide font-light text-sm placeholder-gray-400 bg-white focus:ring disabled:opacity-40 disabled:cursor-not-allowed ${border} ${ring} ${classNameOverload}`;
-    }, [inputRef, classNames, primaryColor, inputClassName]);
+    }, [
+        inputRef,
+        classNames,
+        primaryColor,
+        inputClassName,
+        configs?.colors?.border,
+        configs?.colors?.ring
+    ]);
 
     const handleInputChange = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
