@@ -5,7 +5,13 @@ import Calendar from "../components/Calendar";
 import Footer from "../components/Footer";
 import Input from "../components/Input";
 import Shortcuts from "../components/Shortcuts";
-import { DEFAULT_COLOR, DEFAULT_COLORS } from "../constants";
+import {
+    DEFAULT_BG_CLASSES,
+    DEFAULT_BORDER_CLASSES,
+    DEFAULT_COLOR,
+    DEFAULT_COLORS,
+    DEFAULT_TEXT_CLASSES
+} from "../constants";
 import DatepickerContext from "../contexts/DatepickerContext";
 import { formatDate, nextMonth, previousMonth } from "../helpers";
 import useOnClickOutside from "../hooks";
@@ -25,6 +31,7 @@ interface Props {
     value: DateValueType;
     onChange: (value: DateValueType, e?: HTMLInputElement | null | undefined) => void;
     useRange?: boolean;
+    hideArrow?: boolean;
     showFooter?: boolean;
     showShortcuts?: boolean;
     configs?: Configs | null;
@@ -54,6 +61,7 @@ const Datepicker: React.FC<Props> = ({
     value = null,
     onChange,
     useRange = true,
+    hideArrow = false,
     showFooter = false,
     showShortcuts = false,
     configs = null,
@@ -258,11 +266,12 @@ const Datepicker: React.FC<Props> = ({
 
     // Variable
     const colorPrimary = useMemo(() => {
-        if ((configs?.colors?.custom ?? DEFAULT_COLORS).includes(primaryColor)) {
+        if (configs?.colors && DEFAULT_COLORS.includes(primaryColor)) {
             return primaryColor;
         }
         return DEFAULT_COLOR;
-    }, [primaryColor, configs?.colors?.custom]);
+    }, [primaryColor, configs?.colors]);
+
     const contextValues = useMemo(() => {
         return {
             asSingle,
@@ -336,25 +345,47 @@ const Datepicker: React.FC<Props> = ({
     return (
         <DatepickerContext.Provider value={contextValues}>
             <div
-                className={`relative w-full text-gray-700 ${containerClassName}`}
+                className={`
+                    relative w-full 
+                    ${(classNames?.text ?? DEFAULT_TEXT_CLASSES).placeholder} 
+                    ${containerClassName}
+                `}
                 ref={containerRef}
             >
                 <Input setContextRef={setInputRef} />
 
                 <div
-                    className="transition-all ease-out duration-300 absolute z-10 mt-[1px] text-sm lg:text-xs 2xl:text-sm translate-y-4 opacity-0 hidden"
+                    className={`
+                        transition-all ease-out duration-300 
+                        absolute z-10 
+                        mt-[1px] 
+                        text-sm lg:text-xs 2xl:text-sm 
+                        translate-y-4 opacity-0 
+                        hidden
+                    `}
                     ref={calendarContainerRef}
                 >
-                    <Arrow ref={arrowRef} />
+                    <Arrow className={hideArrow ? "hidden" : ""} ref={arrowRef} />
 
-                    <div className="mt-2.5 shadow-sm border border-gray-300 px-1 py-0.5 bg-white dark:bg-slate-800 dark:text-white dark:border-slate-600 rounded-lg">
+                    <div
+                        className={`
+                        mt-2.5 px-1 py-0.5 
+                        ${(classNames?.border ?? DEFAULT_BORDER_CLASSES).container} 
+                        ${(classNames?.bg ?? DEFAULT_BG_CLASSES).container} 
+                        ${(classNames?.text ?? DEFAULT_TEXT_CLASSES).body} 
+                    `}
+                    >
                         <div className="flex flex-col py-2 lg:flex-row">
                             {showShortcuts && <Shortcuts />}
 
                             <div
-                                className={`flex items-stretch flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-1.5 ${
-                                    showShortcuts ? "md:pl-2" : "md:pl-1"
-                                } pr-2 lg:pr-1`}
+                                className={`
+                                    flex flex-col md:flex-row 
+                                    items-stretch 
+                                    space-y-4 md:space-y-0 md:space-x-1.5 
+                                    ${showShortcuts ? "md:pl-2" : "md:pl-1"} 
+                                    pr-2 lg:pr-1
+                                `}
                             >
                                 <Calendar
                                     date={firstDate}

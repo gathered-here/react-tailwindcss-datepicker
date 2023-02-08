@@ -4,7 +4,9 @@ import React, { useCallback, useContext } from "react";
 
 import { DEFAULT_BG_COLOR, DEFAULT_TEXT_COLOR } from "../../constants";
 import DatepickerContext from "../../contexts/DatepickerContext";
-import { formatDate, nextMonth, previousMonth, classNames as cn } from "../../helpers";
+import { classNames as cn, formatDate, nextMonth, previousMonth } from "../../helpers";
+
+import { DPTextColor } from "types";
 
 dayjs.extend(isBetween);
 
@@ -48,9 +50,10 @@ const Days: React.FC<Props> = ({
                 item >= 10 ? item : "0" + item
             }`;
             if (formatDate(dayjs()) === formatDate(dayjs(itemDate)))
-                return (configs?.colors?.text ?? DEFAULT_TEXT_COLOR)["500"][
-                    primaryColor as keyof (typeof DEFAULT_TEXT_COLOR)["500"]
-                ];
+                return (
+                    configs?.colors?.text?.[500] ??
+                    DEFAULT_TEXT_COLOR["500"][primaryColor as keyof DPTextColor["500"]]
+                );
             return "";
         },
         [calendarData.date, primaryColor, configs?.colors?.text]
@@ -65,13 +68,13 @@ const Days: React.FC<Props> = ({
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
                 className = ` ${
-                    (configs?.colors?.bg ?? DEFAULT_BG_COLOR)["500"][primaryColor]
+                    configs?.colors?.bg?.[500] ?? DEFAULT_BG_COLOR["500"][primaryColor]
                 } text-white font-medium rounded-full`;
             } else if (dayjs(fullDay).isSame(period.start)) {
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
                 className = ` ${
-                    (configs?.colors?.bg ?? DEFAULT_BG_COLOR)["500"][primaryColor]
+                    configs?.colors?.bg?.[500] ?? DEFAULT_BG_COLOR["500"][primaryColor]
                 } text-white font-medium ${
                     dayjs(fullDay).isSame(dayHover) && !period.end
                         ? "rounded-full"
@@ -81,7 +84,7 @@ const Days: React.FC<Props> = ({
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
                 className = ` ${
-                    (configs?.colors?.bg ?? DEFAULT_BG_COLOR)["500"][primaryColor]
+                    configs?.colors?.bg?.[500] ?? DEFAULT_BG_COLOR["500"][primaryColor]
                 } text-white font-medium ${
                     dayjs(fullDay).isSame(dayHover) && !period.start
                         ? "rounded-full"
@@ -111,7 +114,7 @@ const Days: React.FC<Props> = ({
                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     // @ts-ignore
                     return ` ${
-                        (configs?.colors?.bg ?? DEFAULT_BG_COLOR)["100"][primaryColor]
+                        configs?.colors?.bg?.[100] ?? DEFAULT_BG_COLOR["100"][primaryColor]
                     } ${currentDateClass(day)} dark:bg-white/10`;
                 }
             }
@@ -128,7 +131,7 @@ const Days: React.FC<Props> = ({
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
                 className = ` ${
-                    (configs?.colors?.bg ?? DEFAULT_BG_COLOR)["100"][primaryColor]
+                    configs?.colors?.bg?.[100] ?? DEFAULT_BG_COLOR["100"][primaryColor]
                 } ${currentDateClass(day)} dark:bg-white/10`;
             }
 
@@ -138,14 +141,14 @@ const Days: React.FC<Props> = ({
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
                 className = ` ${
-                    (configs?.colors?.bg ?? DEFAULT_BG_COLOR)["100"][primaryColor]
+                    configs?.colors?.bg?.[100] ?? DEFAULT_BG_COLOR["100"][primaryColor]
                 } ${currentDateClass(day)} dark:bg-white/10`;
             }
 
             if (dayHover === fullDay) {
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
-                const bgColor = (configs?.colors?.bg ?? DEFAULT_BG_COLOR)["500"][primaryColor];
+                const bgColor = configs?.colors?.bg?.[500] ?? DEFAULT_BG_COLOR["500"][primaryColor];
                 className = ` transition-all duration-500 text-white font-medium ${bgColor} ${
                     period.start ? "rounded-r-full" : "rounded-l-full"
                 }`;

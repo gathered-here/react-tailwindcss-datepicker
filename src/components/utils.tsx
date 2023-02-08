@@ -8,6 +8,8 @@ import {
 } from "../constants";
 import DatepickerContext from "../contexts/DatepickerContext";
 
+import { DPBGColor, DPButtonColor } from "types";
+
 interface IconProps {
     className: string;
 }
@@ -123,11 +125,14 @@ export const DoubleChevronRightIcon: React.FC<IconProps> = ({ className = "w-6 h
 };
 
 // eslint-disable-next-line react/display-name,@typescript-eslint/ban-types
-export const Arrow = React.forwardRef<HTMLDivElement, {}>((props, ref) => {
+export const Arrow = React.forwardRef<HTMLDivElement, { className?: string }>((props, ref) => {
     return (
         <div
             ref={ref}
-            className="absolute z-20 h-4 w-4 rotate-45 mt-0.5 ml-[1.2rem] border-l border-t border-gray-300 bg-white dark:bg-slate-800 dark:border-slate-600"
+            {...props}
+            className={`absolute z-20 h-4 w-4 rotate-45 mt-0.5 ml-[1.2rem] border-l border-t border-gray-300 bg-white dark:bg-slate-800 dark:border-slate-600 ${
+                props.className ?? ""
+            }`}
         />
     );
 });
@@ -138,9 +143,9 @@ export const SecondaryButton: React.FC<Button> = ({ children, onClick, disabled 
 
     // Functions
     const getClassName: () => string = useCallback(() => {
-        const ringColor = (configs?.colors?.ring ?? DEFAULT_RING_COLOR).focus[
-            primaryColor as keyof typeof DEFAULT_RING_COLOR.focus
-        ];
+        const ringColor =
+            configs?.colors?.ring?.focus ??
+            DEFAULT_RING_COLOR.focus[primaryColor as keyof typeof DEFAULT_RING_COLOR.focus];
         return `w-full transition-all duration-300 bg-white dark:text-gray-700 font-medium border border-gray-300 px-4 py-2 text-sm rounded-md focus:ring-2 focus:ring-offset-2 hover:bg-gray-50 ${ringColor}`;
     }, [primaryColor, configs?.colors?.ring]);
 
@@ -154,18 +159,18 @@ export const SecondaryButton: React.FC<Button> = ({ children, onClick, disabled 
 export const PrimaryButton: React.FC<Button> = ({ children, onClick, disabled = false }) => {
     // Contexts
     const { configs, primaryColor } = useContext(DatepickerContext);
-    const bgColor = (configs?.colors?.bg ?? DEFAULT_BG_COLOR)["500"][
-        primaryColor as keyof (typeof DEFAULT_BG_COLOR)["500"]
-    ];
-    const borderColor = (configs?.colors?.border ?? DEFAULT_BORDER_COLOR)["500"][
-        primaryColor as keyof (typeof DEFAULT_BORDER_COLOR)["500"]
-    ];
-    const bgColorHover = (configs?.colors?.bg ?? DEFAULT_BG_COLOR).hover[
-        primaryColor as keyof typeof DEFAULT_BG_COLOR.hover
-    ];
-    const ringColor = (configs?.colors?.ring ?? DEFAULT_RING_COLOR).focus[
-        primaryColor as keyof typeof DEFAULT_RING_COLOR.focus
-    ];
+    const bgColor =
+        configs?.colors?.bg?.[500] ??
+        DEFAULT_BG_COLOR["500"][primaryColor as keyof (typeof DEFAULT_BG_COLOR)["500"]];
+    const borderColor =
+        configs?.colors?.border?.[500] ??
+        DEFAULT_BORDER_COLOR["500"][primaryColor as keyof (typeof DEFAULT_BORDER_COLOR)["500"]];
+    const bgColorHover =
+        configs?.colors?.bg?.hover ??
+        DEFAULT_BG_COLOR.hover[primaryColor as keyof typeof DEFAULT_BG_COLOR.hover];
+    const ringColor =
+        configs?.colors?.ring?.focus ??
+        DEFAULT_RING_COLOR.focus[primaryColor as keyof typeof DEFAULT_RING_COLOR.focus];
 
     // Functions
     const getClassName = useCallback(() => {
@@ -194,11 +199,28 @@ export const RoundedButton: React.FC<Button> = ({
     const getClassName = useCallback(() => {
         const darkClass = "dark:text-white/70 dark:hover:bg-white/10 dark:focus:bg-white/10";
         const defaultClass = !roundedFull
-            ? `w-full tracking-wide ${darkClass} transition-all duration-300 px-3 ${padding} uppercase hover:bg-gray-100 rounded-md focus:ring-1`
-            : `${darkClass} transition-all duration-300 hover:bg-gray-100 rounded-full p-[0.45rem] focus:ring-1`;
-        const buttonFocusColor = (configs?.colors?.button ?? DEFAULT_BUTTON_COLOR).focus[
-            primaryColor as keyof typeof DEFAULT_BUTTON_COLOR.focus
-        ];
+            ? `
+                w-full 
+                tracking-wide 
+                ${darkClass} 
+                transition-all duration-300 
+                px-3 ${padding} 
+                uppercase 
+                hover:bg-gray-100 
+                rounded-md 
+                focus:ring-1
+            `
+            : `
+                ${darkClass} 
+                transition-all duration-300 
+                p-[0.45rem] 
+                hover:bg-gray-100 
+                rounded-full 
+                focus:ring-1
+            `;
+        const buttonFocusColor =
+            configs?.colors?.button?.focus ??
+            DEFAULT_BUTTON_COLOR.focus[primaryColor as keyof DPButtonColor["focus"]];
         return `${defaultClass} ${buttonFocusColor}`;
     }, [padding, primaryColor, roundedFull, configs?.colors?.button]);
 
@@ -212,9 +234,9 @@ export const RoundedButton: React.FC<Button> = ({
 export const VerticalDash = () => {
     // Contexts
     const { configs, primaryColor } = useContext(DatepickerContext);
-    const bgColor = (configs?.colors?.bg ?? DEFAULT_BG_COLOR)["500"][
-        primaryColor as keyof (typeof DEFAULT_BG_COLOR)["500"]
-    ];
+    const bgColor =
+        configs?.colors?.bg?.[500] ??
+        DEFAULT_BG_COLOR["500"][primaryColor as keyof DPBGColor["500"]];
 
     return <div className={`bg-blue-500 h-7 w-1 rounded-full hidden md:block ${bgColor}`} />;
 };

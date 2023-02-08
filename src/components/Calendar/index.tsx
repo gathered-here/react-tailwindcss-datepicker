@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 
+import { DEFAULT_BORDER_CLASSES } from "../../constants";
 import DatepickerContext from "../../contexts/DatepickerContext";
 import {
     formatDate,
@@ -44,6 +45,7 @@ const Calendar: React.FC<Props> = ({
     // Contexts
     const {
         period,
+        classNames,
         changePeriod,
         changeDayHover,
         showFooter,
@@ -232,11 +234,19 @@ const Calendar: React.FC<Props> = ({
 
     return (
         <div className="w-full md:w-[297px] md:min-w-[297px]">
-            <div className="flex items-center space-x-1.5 border border-gray-300 dark:border-gray-700 rounded-md px-2 py-1.5">
+            <div
+                className={`
+                flex items-center 
+                px-2 py-1.5
+                space-x-1.5 
+                ${(classNames?.border ?? DEFAULT_BORDER_CLASSES).calendar}
+                rounded-md 
+            `}
+            >
                 {!showMonths && !showYears && (
                     <div className="flex-none">
                         <RoundedButton roundedFull={true} onClick={onClickPrevious}>
-                            <ChevronLeftIcon className="h-5 w-5" />
+                            <ChevronLeftIcon className="w-5 h-5" />
                         </RoundedButton>
                     </div>
                 )}
@@ -249,7 +259,7 @@ const Calendar: React.FC<Props> = ({
                                 setYear(year - 12);
                             }}
                         >
-                            <DoubleChevronLeftIcon className="h-5 w-5" />
+                            <DoubleChevronLeftIcon className="w-5 h-5" />
                         </RoundedButton>
                     </div>
                 )}
@@ -281,7 +291,7 @@ const Calendar: React.FC<Props> = ({
                 {!showMonths && !showYears && (
                     <div className="flex-none">
                         <RoundedButton roundedFull={true} onClick={onClickNext}>
-                            <ChevronRightIcon className="h-5 w-5" />
+                            <ChevronRightIcon className="w-5 h-5" />
                         </RoundedButton>
                     </div>
                 )}
@@ -294,7 +304,7 @@ const Calendar: React.FC<Props> = ({
                                 setYear(year + 12);
                             }}
                         >
-                            <DoubleChevronRightIcon className="h-5 w-5" />
+                            <DoubleChevronRightIcon className="w-5 h-5" />
                         </RoundedButton>
                     </div>
                 )}

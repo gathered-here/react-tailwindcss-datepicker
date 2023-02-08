@@ -32,12 +32,11 @@ export interface Configs {
     shortcuts?: DatePickerShortcuts | null;
     footer?: DatePickerFooter | null;
     colors?: Partial<{
-        bg: DPBGColor;
-        border: DPBorderColor;
-        button: DPButtonColor;
-        custom: DPColors;
-        ring: DPRingColor;
-        text: DPTextColor;
+        bg: { [key in keyof DPBGColor]: string };
+        border: { [key in keyof DPBorderColor]: string };
+        button: { [key in keyof DPButtonColor]: string };
+        ring: { [key in keyof DPRingColor]: string };
+        text: { [key in keyof DPTextColor]: string };
     }>;
 }
 
@@ -59,9 +58,25 @@ export type DateRangeType = {
 
 export type DateValueType = DateRangeType | null;
 
-export type ClassNamesTypeProp = {
-    container: (p?: object | null | undefined) => string | undefined;
-    input: (p?: object | null | undefined) => string | undefined;
-    toggleButton: (p?: object | null | undefined) => string | undefined;
-    footer: (p?: object | null | undefined) => string | undefined;
+export type RootClassNamesBG = Record<"container" | "input", string>;
+export type RootClassNamesBorder = Record<"container" | "calendar" | "input", string>;
+export type RootClassNamesButton = Record<string, string>;
+export type RootClassNamesRing = Record<string, string>;
+export type RootClassNamesText = Record<"placeholder" | "body" | "input", string>;
+
+export type RootClassNamesType = {
+    bg: RootClassNamesBG;
+    border: RootClassNamesBorder;
+    button: RootClassNamesButton;
+    ring: RootClassNamesRing;
+    text: RootClassNamesText;
 };
+
+export type ClassNamesTypeProp = Partial<
+    {
+        container: (p?: object | null | undefined) => string | undefined;
+        input: (p?: object | null | undefined) => string | undefined;
+        toggleButton: (p?: object | null | undefined) => string | undefined;
+        footer: (p?: object | null | undefined) => string | undefined;
+    } & RootClassNamesType
+>;

@@ -1,7 +1,19 @@
 import dayjs from "dayjs";
 
 import { formatDate, previousMonth } from "helpers";
-import { DPBGColor, DPBorderColor, DPButtonColor, DPColors, DPRingColor, DPTextColor } from "types";
+import {
+    DPBGColor,
+    DPBorderColor,
+    DPButtonColor,
+    DPColors,
+    DPRingColor,
+    DPTextColor,
+    RootClassNamesBG,
+    RootClassNamesBorder,
+    RootClassNamesButton,
+    RootClassNamesRing,
+    RootClassNamesText
+} from "types";
 
 export const DEFAULT_COLORS: DPColors = [
     "blue",
@@ -25,6 +37,11 @@ export const DEFAULT_COLORS: DPColors = [
 ];
 
 export const DEFAULT_COLOR = "blue";
+
+export const DEFAULT_BG_CLASSES: RootClassNamesBG = {
+    container: "bg-white dark:bg-slate-800 shadow-sm rounded-lg ",
+    input: "bg-white dark:bg-slate-800"
+};
 
 // Beware, these maps of colors cannot be replaced with functions using string interpolation such as `bg-${color}-100`
 // as described in Tailwind documentation https://tailwindcss.com/docs/content-configuration#dynamic-class-names
@@ -107,6 +124,12 @@ export const DEFAULT_BG_COLOR: DPBGColor = {
     }
 };
 
+export const DEFAULT_TEXT_CLASSES: RootClassNamesText = {
+    placeholder: "text-gray-700",
+    body: "text-current dark:text-white ",
+    input: "text-current dark:text-white/80 "
+};
+
 export const DEFAULT_TEXT_COLOR: DPTextColor = {
     500: {
         blue: "text-blue-500",
@@ -167,6 +190,12 @@ export const DEFAULT_TEXT_COLOR: DPTextColor = {
     }
 };
 
+export const DEFAULT_BORDER_CLASSES: RootClassNamesBorder = {
+    container: "border border-gray-300 dark:border-slate-600",
+    calendar: "border border-gray-300 dark:border-gray-700",
+    input: "border border-gray-300 dark:border-slate-600"
+};
+
 export const DEFAULT_BORDER_COLOR: DPBorderColor = {
     500: {
         blue: "border-blue-500",
@@ -208,6 +237,8 @@ export const DEFAULT_BORDER_COLOR: DPBorderColor = {
     }
 };
 
+export const DEFAULT_RING_CLASSES: RootClassNamesRing = {};
+
 export const DEFAULT_RING_COLOR: DPRingColor = {
     focus: {
         blue: "focus:ring-blue-500",
@@ -248,6 +279,8 @@ export const DEFAULT_RING_COLOR: DPRingColor = {
         rose: "focus:ring-rose-500/20"
     }
 };
+
+export const DEFAULT_BUTTON_CLASSES: RootClassNamesButton = {};
 
 export const DEFAULT_BUTTON_COLOR: DPButtonColor = {
     focus: {
