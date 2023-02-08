@@ -15,7 +15,9 @@ export declare const ChevronLeftIcon: React.FC<IconProps>;
 export declare const DoubleChevronLeftIcon: React.FC<IconProps>;
 export declare const ChevronRightIcon: React.FC<IconProps>;
 export declare const DoubleChevronRightIcon: React.FC<IconProps>;
-export declare const Arrow: React.ForwardRefExoticComponent<React.RefAttributes<HTMLDivElement>>;
+export declare const Arrow: React.ForwardRefExoticComponent<{
+    className?: string | undefined;
+} & React.RefAttributes<HTMLDivElement>>;
 export declare const SecondaryButton: React.FC<Button>;
 export declare const PrimaryButton: React.FC<Button>;
 export declare const RoundedButton: React.FC<Button>;

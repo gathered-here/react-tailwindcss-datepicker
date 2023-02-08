@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 export declare function classNames(...classes: (false | null | undefined | string)[]): string;
-export declare function getTextColorByPrimaryColor(color: string): "" | "text-blue-500" | "text-orange-500" | "text-yellow-500" | "text-red-500" | "text-purple-500" | "text-amber-500" | "text-lime-500" | "text-green-500" | "text-emerald-500" | "text-teal-500" | "text-cyan-500" | "text-sky-500" | "text-indigo-500" | "text-violet-500" | "text-fuchsia-500" | "text-pink-500" | "text-rose-500";
+export declare function getTextColorByPrimaryColor(color: string): "text-blue-500" | "text-orange-500" | "text-yellow-500" | "text-red-500" | "text-purple-500" | "text-amber-500" | "text-lime-500" | "text-green-500" | "text-emerald-500" | "text-teal-500" | "text-cyan-500" | "text-sky-500" | "text-indigo-500" | "text-violet-500" | "text-fuchsia-500" | "text-pink-500" | "text-rose-500" | "";
 export declare function generateArrayNumber(start?: number, end?: number): number[];
 export declare function shortString(value: string, limit?: number): string;
 export declare function ucFirst(value: string): string;

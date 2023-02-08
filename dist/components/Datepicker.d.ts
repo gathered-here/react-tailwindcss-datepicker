@@ -5,6 +5,7 @@ interface Props {
     value: DateValueType;
     onChange: (value: DateValueType, e?: HTMLInputElement | null | undefined) => void;
     useRange?: boolean;
+    hideArrow?: boolean;
     showFooter?: boolean;
     showShortcuts?: boolean;
     configs?: Configs | null;

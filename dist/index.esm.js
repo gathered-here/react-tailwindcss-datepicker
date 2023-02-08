@@ -2,64 +2,19 @@ import require$$0 from 'dayjs';
 import React, { createContext, useContext, useCallback, useState, useEffect, useMemo, useRef } from 'react';
 
 function _mergeNamespaces(n, m) {
-    m.forEach(function (e) {
-        e && typeof e !== 'string' && !Array.isArray(e) && Object.keys(e).forEach(function (k) {
-            if (k !== 'default' && !(k in n)) {
-                var d = Object.getOwnPropertyDescriptor(e, k);
-                Object.defineProperty(n, k, d.get ? d : {
-                    enumerable: true,
-                    get: function () { return e[k]; }
-                });
-            }
-        });
-    });
-    return Object.freeze(n);
+	m.forEach(function (e) {
+		e && typeof e !== 'string' && !Array.isArray(e) && Object.keys(e).forEach(function (k) {
+			if (k !== 'default' && !(k in n)) {
+				var d = Object.getOwnPropertyDescriptor(e, k);
+				Object.defineProperty(n, k, d.get ? d : {
+					enumerable: true,
+					get: function () { return e[k]; }
+				});
+			}
+		});
+	});
+	return Object.freeze(n);
 }
-
-const DatepickerContext = createContext({
-    input: undefined,
-    primaryColor: "blue",
-    calendarContainer: null,
-    arrowContainer: null,
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    hideDatepicker: () => { },
-    period: { start: null, end: null },
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
-    changePeriod: period => { },
-    dayHover: null,
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
-    changeDayHover: (day) => { },
-    inputText: "",
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
-    changeInputText: text => { },
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
-    updateFirstDate: date => { },
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
-    changeDatepickerValue: (
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
-    value, 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
-    e
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
-    ) => { },
-    showFooter: false,
-    value: null,
-    i18n: "en",
-    disabled: false,
-    inputClassName: "",
-    containerClassName: "",
-    toggleClassName: "",
-    readOnly: false,
-    displayFormat: "YYYY-MM-DD",
-    minDate: null,
-    maxDate: null,
-    disabledDates: null,
-    inputId: undefined,
-    inputName: undefined,
-    startWeekOn: "sun",
-    toggleIcon: undefined,
-    classNames: undefined
-});
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -619,6 +574,10 @@ const DEFAULT_COLORS = [
     "rose"
 ];
 const DEFAULT_COLOR = "blue";
+const DEFAULT_BG_CLASSES = {
+    container: "bg-white dark:bg-slate-800 shadow-sm rounded-lg ",
+    input: "bg-white dark:bg-slate-800"
+};
 // Beware, these maps of colors cannot be replaced with functions using string interpolation such as `bg-${color}-100`
 // as described in Tailwind documentation https://tailwindcss.com/docs/content-configuration#dynamic-class-names
 const DEFAULT_BG_COLOR = {
@@ -699,6 +658,11 @@ const DEFAULT_BG_COLOR = {
         rose: "hover:bg-rose-600"
     }
 };
+const DEFAULT_TEXT_CLASSES = {
+    placeholder: "text-gray-700",
+    body: "text-current dark:text-white ",
+    input: "text-current dark:text-white/80 "
+};
 const DEFAULT_TEXT_COLOR = {
     500: {
         blue: "text-blue-500",
@@ -757,6 +721,11 @@ const DEFAULT_TEXT_COLOR = {
         pink: "hover:text-pink-700",
         rose: "hover:text-rose-700"
     }
+};
+const DEFAULT_BORDER_CLASSES = {
+    container: "border border-gray-300 dark:border-slate-600",
+    calendar: "border border-gray-300 dark:border-gray-700",
+    input: "border border-gray-300 dark:border-slate-600"
 };
 const DEFAULT_BORDER_COLOR = {
     500: {
@@ -908,6 +877,51 @@ const DEFAULT_SHORTCUTS = {
     }
 };
 
+const DatepickerContext = createContext({
+    input: undefined,
+    primaryColor: "blue",
+    calendarContainer: null,
+    arrowContainer: null,
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    hideDatepicker: () => { },
+    period: { start: null, end: null },
+    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+    changePeriod: period => { },
+    dayHover: null,
+    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+    changeDayHover: (day) => { },
+    inputText: "",
+    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+    changeInputText: text => { },
+    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+    updateFirstDate: date => { },
+    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+    changeDatepickerValue: (
+    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+    value, 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+    e
+    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+    ) => { },
+    showFooter: false,
+    value: null,
+    i18n: "en",
+    disabled: false,
+    inputClassName: "",
+    containerClassName: "",
+    toggleClassName: "",
+    readOnly: false,
+    displayFormat: "YYYY-MM-DD",
+    minDate: null,
+    maxDate: null,
+    disabledDates: null,
+    inputId: undefined,
+    inputName: undefined,
+    startWeekOn: "sun",
+    toggleIcon: undefined,
+    classNames: undefined
+});
+
 const DateIcon = ({ className = "w-6 h-6" }) => {
     return (React.createElement("svg", { className: className, xmlns: "http://www.w3.org/2000/svg", fill: "none", viewBox: "0 0 24 24", strokeWidth: 1.5, stroke: "currentColor" },
         React.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" })));
@@ -934,14 +948,15 @@ const DoubleChevronRightIcon = ({ className = "w-6 h-6" }) => {
 };
 // eslint-disable-next-line react/display-name,@typescript-eslint/ban-types
 const Arrow = React.forwardRef((props, ref) => {
-    return (React.createElement("div", { ref: ref, className: "absolute z-20 h-4 w-4 rotate-45 mt-0.5 ml-[1.2rem] border-l border-t border-gray-300 bg-white dark:bg-slate-800 dark:border-slate-600" }));
+    return (React.createElement("div", { ref: ref, ...props, className: `absolute z-20 h-4 w-4 rotate-45 mt-0.5 ml-[1.2rem] border-l border-t border-gray-300 bg-white dark:bg-slate-800 dark:border-slate-600 ${props.className ?? ""}` }));
 });
 const SecondaryButton = ({ children, onClick, disabled = false }) => {
     // Contexts
     const { configs, primaryColor } = useContext(DatepickerContext);
     // Functions
     const getClassName = useCallback(() => {
-        const ringColor = (configs?.colors?.ring ?? DEFAULT_RING_COLOR).focus[primaryColor];
+        const ringColor = configs?.colors?.ring?.focus ??
+            DEFAULT_RING_COLOR.focus[primaryColor];
         return `w-full transition-all duration-300 bg-white dark:text-gray-700 font-medium border border-gray-300 px-4 py-2 text-sm rounded-md focus:ring-2 focus:ring-offset-2 hover:bg-gray-50 ${ringColor}`;
     }, [primaryColor, configs?.colors?.ring]);
     return (React.createElement("button", { type: "button", className: getClassName(), onClick: onClick, disabled: disabled }, children));
@@ -949,10 +964,14 @@ const SecondaryButton = ({ children, onClick, disabled = false }) => {
 const PrimaryButton = ({ children, onClick, disabled = false }) => {
     // Contexts
     const { configs, primaryColor } = useContext(DatepickerContext);
-    const bgColor = (configs?.colors?.bg ?? DEFAULT_BG_COLOR)["500"][primaryColor];
-    const borderColor = (configs?.colors?.border ?? DEFAULT_BORDER_COLOR)["500"][primaryColor];
-    const bgColorHover = (configs?.colors?.bg ?? DEFAULT_BG_COLOR).hover[primaryColor];
-    const ringColor = (configs?.colors?.ring ?? DEFAULT_RING_COLOR).focus[primaryColor];
+    const bgColor = configs?.colors?.bg?.[500] ??
+        DEFAULT_BG_COLOR["500"][primaryColor];
+    const borderColor = configs?.colors?.border?.[500] ??
+        DEFAULT_BORDER_COLOR["500"][primaryColor];
+    const bgColorHover = configs?.colors?.bg?.hover ??
+        DEFAULT_BG_COLOR.hover[primaryColor];
+    const ringColor = configs?.colors?.ring?.focus ??
+        DEFAULT_RING_COLOR.focus[primaryColor];
     // Functions
     const getClassName = useCallback(() => {
         return `w-full transition-all duration-300 ${bgColor} ${borderColor} text-white font-medium border px-4 py-2 text-sm rounded-md focus:ring-2 focus:ring-offset-2 ${bgColorHover} ${ringColor} ${disabled ? " cursor-no-drop" : ""}`;
@@ -966,9 +985,27 @@ const RoundedButton = ({ children, onClick, roundedFull = false, padding = "py-[
     const getClassName = useCallback(() => {
         const darkClass = "dark:text-white/70 dark:hover:bg-white/10 dark:focus:bg-white/10";
         const defaultClass = !roundedFull
-            ? `w-full tracking-wide ${darkClass} transition-all duration-300 px-3 ${padding} uppercase hover:bg-gray-100 rounded-md focus:ring-1`
-            : `${darkClass} transition-all duration-300 hover:bg-gray-100 rounded-full p-[0.45rem] focus:ring-1`;
-        const buttonFocusColor = (configs?.colors?.button ?? DEFAULT_BUTTON_COLOR).focus[primaryColor];
+            ? `
+                w-full 
+                tracking-wide 
+                ${darkClass} 
+                transition-all duration-300 
+                px-3 ${padding} 
+                uppercase 
+                hover:bg-gray-100 
+                rounded-md 
+                focus:ring-1
+            `
+            : `
+                ${darkClass} 
+                transition-all duration-300 
+                p-[0.45rem] 
+                hover:bg-gray-100 
+                rounded-full 
+                focus:ring-1
+            `;
+        const buttonFocusColor = configs?.colors?.button?.focus ??
+            DEFAULT_BUTTON_COLOR.focus[primaryColor];
         return `${defaultClass} ${buttonFocusColor}`;
     }, [padding, primaryColor, roundedFull, configs?.colors?.button]);
     return (React.createElement("button", { type: "button", className: getClassName(), onClick: onClick }, children));
@@ -976,7 +1013,8 @@ const RoundedButton = ({ children, onClick, roundedFull = false, padding = "py-[
 const VerticalDash = () => {
     // Contexts
     const { configs, primaryColor } = useContext(DatepickerContext);
-    const bgColor = (configs?.colors?.bg ?? DEFAULT_BG_COLOR)["500"][primaryColor];
+    const bgColor = configs?.colors?.bg?.[500] ??
+        DEFAULT_BG_COLOR["500"][primaryColor];
     return React.createElement("div", { className: `bg-blue-500 h-7 w-1 rounded-full hidden md:block ${bgColor}` });
 };
 
@@ -996,7 +1034,8 @@ const Days = ({ calendarData, onClickPreviousDays, onClickDay, onClickNextDays }
     const currentDateClass = useCallback((item) => {
         const itemDate = `${calendarData.date.year()}-${calendarData.date.month() + 1}-${item >= 10 ? item : "0" + item}`;
         if (formatDate(require$$0()) === formatDate(require$$0(itemDate)))
-            return (configs?.colors?.text ?? DEFAULT_TEXT_COLOR)["500"][primaryColor];
+            return (configs?.colors?.text?.[500] ??
+                DEFAULT_TEXT_COLOR["500"][primaryColor]);
         return "";
     }, [calendarData.date, primaryColor, configs?.colors?.text]);
     const activeDateData = useCallback((day) => {
@@ -1005,19 +1044,19 @@ const Days = ({ calendarData, onClickPreviousDays, onClickDay, onClickNextDays }
         if (require$$0(fullDay).isSame(period.start) && require$$0(fullDay).isSame(period.end)) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            className = ` ${(configs?.colors?.bg ?? DEFAULT_BG_COLOR)["500"][primaryColor]} text-white font-medium rounded-full`;
+            className = ` ${configs?.colors?.bg?.[500] ?? DEFAULT_BG_COLOR["500"][primaryColor]} text-white font-medium rounded-full`;
         }
         else if (require$$0(fullDay).isSame(period.start)) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            className = ` ${(configs?.colors?.bg ?? DEFAULT_BG_COLOR)["500"][primaryColor]} text-white font-medium ${require$$0(fullDay).isSame(dayHover) && !period.end
+            className = ` ${configs?.colors?.bg?.[500] ?? DEFAULT_BG_COLOR["500"][primaryColor]} text-white font-medium ${require$$0(fullDay).isSame(dayHover) && !period.end
                 ? "rounded-full"
                 : "rounded-l-full"}`;
         }
         else if (require$$0(fullDay).isSame(period.end)) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            className = ` ${(configs?.colors?.bg ?? DEFAULT_BG_COLOR)["500"][primaryColor]} text-white font-medium ${require$$0(fullDay).isSame(dayHover) && !period.start
+            className = ` ${configs?.colors?.bg?.[500] ?? DEFAULT_BG_COLOR["500"][primaryColor]} text-white font-medium ${require$$0(fullDay).isSame(dayHover) && !period.start
                 ? "rounded-full"
                 : "rounded-r-full"}`;
         }
@@ -1035,7 +1074,7 @@ const Days = ({ calendarData, onClickPreviousDays, onClickDay, onClickNextDays }
             if (require$$0(fullDay).isBetween(period.start, period.end, "day", "[)")) {
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
-                return ` ${(configs?.colors?.bg ?? DEFAULT_BG_COLOR)["100"][primaryColor]} ${currentDateClass(day)} dark:bg-white/10`;
+                return ` ${configs?.colors?.bg?.[100] ?? DEFAULT_BG_COLOR["100"][primaryColor]} ${currentDateClass(day)} dark:bg-white/10`;
             }
         }
         if (!dayHover) {
@@ -1048,19 +1087,19 @@ const Days = ({ calendarData, onClickPreviousDays, onClickDay, onClickNextDays }
         if (period.start && require$$0(fullDay).isBetween(period.start, dayHover, "day", "[)")) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            className = ` ${(configs?.colors?.bg ?? DEFAULT_BG_COLOR)["100"][primaryColor]} ${currentDateClass(day)} dark:bg-white/10`;
+            className = ` ${configs?.colors?.bg?.[100] ?? DEFAULT_BG_COLOR["100"][primaryColor]} ${currentDateClass(day)} dark:bg-white/10`;
         }
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         if (period.end && require$$0(fullDay).isBetween(dayHover, period.end, "day", "[)")) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            className = ` ${(configs?.colors?.bg ?? DEFAULT_BG_COLOR)["100"][primaryColor]} ${currentDateClass(day)} dark:bg-white/10`;
+            className = ` ${configs?.colors?.bg?.[100] ?? DEFAULT_BG_COLOR["100"][primaryColor]} ${currentDateClass(day)} dark:bg-white/10`;
         }
         if (dayHover === fullDay) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            const bgColor = (configs?.colors?.bg ?? DEFAULT_BG_COLOR)["500"][primaryColor];
+            const bgColor = configs?.colors?.bg?.[500] ?? DEFAULT_BG_COLOR["500"][primaryColor];
             className = ` transition-all duration-500 text-white font-medium ${bgColor} ${period.start ? "rounded-r-full" : "rounded-l-full"}`;
         }
         return className;
@@ -1232,7 +1271,7 @@ const Years = ({ year, clickYear }) => {
 
 const Calendar = ({ date, onClickPrevious, onClickNext, changeMonth, changeYear }) => {
     // Contexts
-    const { period, changePeriod, changeDayHover, showFooter, changeDatepickerValue, hideDatepicker, asSingle, i18n, startWeekOn, input } = useContext(DatepickerContext);
+    const { period, classNames, changePeriod, changeDayHover, showFooter, changeDatepickerValue, hideDatepicker, asSingle, i18n, startWeekOn, input } = useContext(DatepickerContext);
     loadLanguageModule(i18n);
     // States
     const [showMonths, setShowMonths] = useState(false);
@@ -1368,15 +1407,21 @@ const Calendar = ({ date, onClickPrevious, onClickNext, changeMonth, changeYear 
         };
     }, [current, date, next, previous]);
     return (React.createElement("div", { className: "w-full md:w-[297px] md:min-w-[297px]" },
-        React.createElement("div", { className: "flex items-center space-x-1.5 border border-gray-300 dark:border-gray-700 rounded-md px-2 py-1.5" },
+        React.createElement("div", { className: `
+                flex items-center 
+                px-2 py-1.5
+                space-x-1.5 
+                ${(classNames?.border ?? DEFAULT_BORDER_CLASSES).calendar}
+                rounded-md 
+            ` },
             !showMonths && !showYears && (React.createElement("div", { className: "flex-none" },
                 React.createElement(RoundedButton, { roundedFull: true, onClick: onClickPrevious },
-                    React.createElement(ChevronLeftIcon, { className: "h-5 w-5" })))),
+                    React.createElement(ChevronLeftIcon, { className: "w-5 h-5" })))),
             showYears && (React.createElement("div", { className: "flex-none" },
                 React.createElement(RoundedButton, { roundedFull: true, onClick: () => {
                         setYear(year - 12);
                     } },
-                    React.createElement(DoubleChevronLeftIcon, { className: "h-5 w-5" })))),
+                    React.createElement(DoubleChevronLeftIcon, { className: "w-5 h-5" })))),
             React.createElement("div", { className: "flex flex-1 items-center space-x-1.5" },
                 React.createElement("div", { className: "w-1/2" },
                     React.createElement(RoundedButton, { onClick: () => {
@@ -1392,12 +1437,12 @@ const Calendar = ({ date, onClickPrevious, onClickNext, changeMonth, changeYear 
                         React.createElement(React.Fragment, null, calendarData.date.year())))),
             !showMonths && !showYears && (React.createElement("div", { className: "flex-none" },
                 React.createElement(RoundedButton, { roundedFull: true, onClick: onClickNext },
-                    React.createElement(ChevronRightIcon, { className: "h-5 w-5" })))),
+                    React.createElement(ChevronRightIcon, { className: "w-5 h-5" })))),
             showYears && (React.createElement("div", { className: "flex-none" },
                 React.createElement(RoundedButton, { roundedFull: true, onClick: () => {
                         setYear(year + 12);
                     } },
-                    React.createElement(DoubleChevronRightIcon, { className: "h-5 w-5" }))))),
+                    React.createElement(DoubleChevronRightIcon, { className: "w-5 h-5" }))))),
         React.createElement("div", { className: "px-0.5 sm:px-2 mt-0.5 min-h-[285px]" },
             showMonths && React.createElement(Months, { clickMonth: clickMonth }),
             showYears && React.createElement(Years, { year: year, clickYear: clickYear }),
@@ -1458,10 +1503,31 @@ const Input = (e) => {
         if (input && typeof classNames != "undefined" && typeof classNames.input === "function") {
             return classNames?.input(input);
         }
-        const border = (configs?.colors?.border ?? DEFAULT_BORDER_COLOR).focus[primaryColor];
-        const ring = (configs?.colors?.ring ?? DEFAULT_RING_COLOR)["second-focus"][primaryColor];
+        const border = configs?.colors?.border?.focus ??
+            DEFAULT_BORDER_COLOR.focus[primaryColor];
+        const ring = configs?.colors?.ring?.["second-focus"] ??
+            DEFAULT_RING_COLOR["second-focus"][primaryColor];
         const classNameOverload = typeof inputClassName === "string" ? inputClassName : "";
-        return `relative transition-all duration-300 py-2.5 pl-4 pr-14 w-full border-gray-300 dark:bg-slate-800 dark:text-white/80 dark:border-slate-600 rounded-lg tracking-wide font-light text-sm placeholder-gray-400 bg-white focus:ring disabled:opacity-40 disabled:cursor-not-allowed ${border} ${ring} ${classNameOverload}`;
+        return `
+            relative 
+            transition-all duration-300 
+            
+            py-2.5 pl-4 pr-14 
+            w-full 
+            rounded-lg 
+            
+            ${(classNames?.bg ?? DEFAULT_BG_CLASSES).input}
+            ${(classNames?.text ?? DEFAULT_TEXT_CLASSES).input}
+            ${(classNames?.border ?? DEFAULT_BORDER_CLASSES).input}
+            
+            tracking-wide font-light text-sm 
+            placeholder-gray-400 
+            
+            focus:ring disabled:opacity-40 disabled:cursor-not-allowed 
+            ${border} 
+            ${ring} 
+            ${classNameOverload}
+        `;
     }, [
         inputRef,
         classNames,
@@ -1594,8 +1660,10 @@ const ItemTemplate = React.memo((props) => {
     const { configs, primaryColor, period, changePeriod, changeInputText, updateFirstDate, dayHover, changeDayHover, hideDatepicker, changeDatepickerValue } = useContext(DatepickerContext);
     // Functions
     const getClassName = useCallback(() => {
-        const textColor = (configs?.colors?.text ?? DEFAULT_TEXT_COLOR)["600"][primaryColor];
-        const textColorHover = (configs?.colors?.text ?? DEFAULT_TEXT_COLOR).hover[primaryColor];
+        const textColor = configs?.colors?.text?.["600"] ??
+            DEFAULT_TEXT_COLOR["600"][primaryColor];
+        const textColorHover = configs?.colors?.text?.hover ??
+            DEFAULT_TEXT_COLOR.hover[primaryColor];
         return `whitespace-nowrap w-1/2 md:w-1/3 lg:w-auto transition-all duration-300 hover:bg-gray-100 dark:hover:bg-white/10 p-2 rounded cursor-pointer ${textColor} ${textColorHover}`;
     }, [primaryColor, configs?.colors?.text]);
     const chosePeriod = useCallback((item) => {
@@ -1674,7 +1742,7 @@ function useOnClickOutside(ref, handler) {
     }, [ref, handler]);
 }
 
-const Datepicker = ({ primaryColor = "blue", value = null, onChange, useRange = true, showFooter = false, showShortcuts = false, configs = null, asSingle = false, placeholder = null, separator = "~", startFrom = null, i18n = "en", disabled = false, inputClassName = null, containerClassName = null, toggleClassName = null, toggleIcon = undefined, displayFormat = "YYYY-MM-DD", readOnly = false, minDate = null, maxDate = null, disabledDates = null, inputId, inputName, startWeekOn = "sun", classNames = undefined }) => {
+const Datepicker = ({ primaryColor = "blue", value = null, onChange, useRange = true, hideArrow = false, showFooter = false, showShortcuts = false, configs = null, asSingle = false, placeholder = null, separator = "~", startFrom = null, i18n = "en", disabled = false, inputClassName = null, containerClassName = null, toggleClassName = null, toggleIcon = undefined, displayFormat = "YYYY-MM-DD", readOnly = false, minDate = null, maxDate = null, disabledDates = null, inputId, inputName, startWeekOn = "sun", classNames = undefined }) => {
     // Ref
     const containerRef = useRef(null);
     const calendarContainerRef = useRef(null);
@@ -1811,11 +1879,11 @@ const Datepicker = ({ primaryColor = "blue", value = null, onChange, useRange = 
     }, [startFrom, value]);
     // Variable
     const colorPrimary = useMemo(() => {
-        if ((configs?.colors?.custom ?? DEFAULT_COLORS).includes(primaryColor)) {
+        if (configs?.colors && DEFAULT_COLORS.includes(primaryColor)) {
             return primaryColor;
         }
         return DEFAULT_COLOR;
-    }, [primaryColor, configs?.colors?.custom]);
+    }, [primaryColor, configs?.colors]);
     const contextValues = useMemo(() => {
         return {
             asSingle,
@@ -1886,14 +1954,36 @@ const Datepicker = ({ primaryColor = "blue", value = null, onChange, useRange = 
         inputRef
     ]);
     return (React.createElement(DatepickerContext.Provider, { value: contextValues },
-        React.createElement("div", { className: `relative w-full text-gray-700 ${containerClassName}`, ref: containerRef },
+        React.createElement("div", { className: `
+                    relative w-full 
+                    ${(classNames?.text ?? DEFAULT_TEXT_CLASSES).placeholder} 
+                    ${containerClassName}
+                `, ref: containerRef },
             React.createElement(Input, { setContextRef: setInputRef }),
-            React.createElement("div", { className: "transition-all ease-out duration-300 absolute z-10 mt-[1px] text-sm lg:text-xs 2xl:text-sm translate-y-4 opacity-0 hidden", ref: calendarContainerRef },
-                React.createElement(Arrow, { ref: arrowRef }),
-                React.createElement("div", { className: "mt-2.5 shadow-sm border border-gray-300 px-1 py-0.5 bg-white dark:bg-slate-800 dark:text-white dark:border-slate-600 rounded-lg" },
+            React.createElement("div", { className: `
+                        transition-all ease-out duration-300 
+                        absolute z-10 
+                        mt-[1px] 
+                        text-sm lg:text-xs 2xl:text-sm 
+                        translate-y-4 opacity-0 
+                        hidden
+                    `, ref: calendarContainerRef },
+                React.createElement(Arrow, { className: hideArrow ? "hidden" : "", ref: arrowRef }),
+                React.createElement("div", { className: `
+                        mt-2.5 px-1 py-0.5 
+                        ${(classNames?.border ?? DEFAULT_BORDER_CLASSES).container} 
+                        ${(classNames?.bg ?? DEFAULT_BG_CLASSES).container} 
+                        ${(classNames?.text ?? DEFAULT_TEXT_CLASSES).body} 
+                    ` },
                     React.createElement("div", { className: "flex flex-col py-2 lg:flex-row" },
                         showShortcuts && React.createElement(Shortcuts, null),
-                        React.createElement("div", { className: `flex items-stretch flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-1.5 ${showShortcuts ? "md:pl-2" : "md:pl-1"} pr-2 lg:pr-1` },
+                        React.createElement("div", { className: `
+                                    flex flex-col md:flex-row 
+                                    items-stretch 
+                                    space-y-4 md:space-y-0 md:space-x-1.5 
+                                    ${showShortcuts ? "md:pl-2" : "md:pl-1"} 
+                                    pr-2 lg:pr-1
+                                ` },
                             React.createElement(Calendar, { date: firstDate, onClickPrevious: previousMonthFirst, onClickNext: nextMonthFirst, changeMonth: changeFirstMonth, changeYear: changeFirstYear }),
                             useRange && (React.createElement(React.Fragment, null,
                                 React.createElement("div", { className: "flex items-center" },
@@ -1911,8 +2001,8 @@ var af$2 = {exports: {}};
 var af = af$2.exports;
 
 var af$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': af
+	__proto__: null,
+	'default': af
 }, [af$2.exports]);
 
 var am$2 = {exports: {}};
@@ -1924,8 +2014,8 @@ var am$2 = {exports: {}};
 var am = am$2.exports;
 
 var am$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': am
+	__proto__: null,
+	'default': am
 }, [am$2.exports]);
 
 var arDz$2 = {exports: {}};
@@ -1937,8 +2027,8 @@ var arDz$2 = {exports: {}};
 var arDz = arDz$2.exports;
 
 var arDz$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': arDz
+	__proto__: null,
+	'default': arDz
 }, [arDz$2.exports]);
 
 var arIq$2 = {exports: {}};
@@ -1950,8 +2040,8 @@ var arIq$2 = {exports: {}};
 var arIq = arIq$2.exports;
 
 var arIq$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': arIq
+	__proto__: null,
+	'default': arIq
 }, [arIq$2.exports]);
 
 var arKw$2 = {exports: {}};
@@ -1963,8 +2053,8 @@ var arKw$2 = {exports: {}};
 var arKw = arKw$2.exports;
 
 var arKw$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': arKw
+	__proto__: null,
+	'default': arKw
 }, [arKw$2.exports]);
 
 var arLy$2 = {exports: {}};
@@ -1976,8 +2066,8 @@ var arLy$2 = {exports: {}};
 var arLy = arLy$2.exports;
 
 var arLy$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': arLy
+	__proto__: null,
+	'default': arLy
 }, [arLy$2.exports]);
 
 var arMa$2 = {exports: {}};
@@ -1989,8 +2079,8 @@ var arMa$2 = {exports: {}};
 var arMa = arMa$2.exports;
 
 var arMa$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': arMa
+	__proto__: null,
+	'default': arMa
 }, [arMa$2.exports]);
 
 var arSa$2 = {exports: {}};
@@ -2002,8 +2092,8 @@ var arSa$2 = {exports: {}};
 var arSa = arSa$2.exports;
 
 var arSa$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': arSa
+	__proto__: null,
+	'default': arSa
 }, [arSa$2.exports]);
 
 var arTn$2 = {exports: {}};
@@ -2015,8 +2105,8 @@ var arTn$2 = {exports: {}};
 var arTn = arTn$2.exports;
 
 var arTn$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': arTn
+	__proto__: null,
+	'default': arTn
 }, [arTn$2.exports]);
 
 var ar$2 = {exports: {}};
@@ -2028,8 +2118,8 @@ var ar$2 = {exports: {}};
 var ar = ar$2.exports;
 
 var ar$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': ar
+	__proto__: null,
+	'default': ar
 }, [ar$2.exports]);
 
 var az$2 = {exports: {}};
@@ -2041,8 +2131,8 @@ var az$2 = {exports: {}};
 var az = az$2.exports;
 
 var az$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': az
+	__proto__: null,
+	'default': az
 }, [az$2.exports]);
 
 var bg$2 = {exports: {}};
@@ -2054,8 +2144,8 @@ var bg$2 = {exports: {}};
 var bg = bg$2.exports;
 
 var bg$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': bg
+	__proto__: null,
+	'default': bg
 }, [bg$2.exports]);
 
 var bi$2 = {exports: {}};
@@ -2067,8 +2157,8 @@ var bi$2 = {exports: {}};
 var bi = bi$2.exports;
 
 var bi$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': bi
+	__proto__: null,
+	'default': bi
 }, [bi$2.exports]);
 
 var bm$2 = {exports: {}};
@@ -2080,8 +2170,8 @@ var bm$2 = {exports: {}};
 var bm = bm$2.exports;
 
 var bm$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': bm
+	__proto__: null,
+	'default': bm
 }, [bm$2.exports]);
 
 var bnBd$2 = {exports: {}};
@@ -2093,8 +2183,8 @@ var bnBd$2 = {exports: {}};
 var bnBd = bnBd$2.exports;
 
 var bnBd$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': bnBd
+	__proto__: null,
+	'default': bnBd
 }, [bnBd$2.exports]);
 
 var bn$2 = {exports: {}};
@@ -2106,8 +2196,8 @@ var bn$2 = {exports: {}};
 var bn = bn$2.exports;
 
 var bn$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': bn
+	__proto__: null,
+	'default': bn
 }, [bn$2.exports]);
 
 var bo$2 = {exports: {}};
@@ -2119,8 +2209,8 @@ var bo$2 = {exports: {}};
 var bo = bo$2.exports;
 
 var bo$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': bo
+	__proto__: null,
+	'default': bo
 }, [bo$2.exports]);
 
 var br$2 = {exports: {}};
@@ -2132,8 +2222,8 @@ var br$2 = {exports: {}};
 var br = br$2.exports;
 
 var br$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': br
+	__proto__: null,
+	'default': br
 }, [br$2.exports]);
 
 var ca$2 = {exports: {}};
@@ -2145,8 +2235,8 @@ var ca$2 = {exports: {}};
 var ca = ca$2.exports;
 
 var ca$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': ca
+	__proto__: null,
+	'default': ca
 }, [ca$2.exports]);
 
 var cs$2 = {exports: {}};
@@ -2158,8 +2248,8 @@ var cs$2 = {exports: {}};
 var cs = cs$2.exports;
 
 var cs$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': cs
+	__proto__: null,
+	'default': cs
 }, [cs$2.exports]);
 
 var cv$2 = {exports: {}};
@@ -2171,8 +2261,8 @@ var cv$2 = {exports: {}};
 var cv = cv$2.exports;
 
 var cv$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': cv
+	__proto__: null,
+	'default': cv
 }, [cv$2.exports]);
 
 var cy$2 = {exports: {}};
@@ -2184,8 +2274,8 @@ var cy$2 = {exports: {}};
 var cy = cy$2.exports;
 
 var cy$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': cy
+	__proto__: null,
+	'default': cy
 }, [cy$2.exports]);
 
 var da$2 = {exports: {}};
@@ -2197,8 +2287,8 @@ var da$2 = {exports: {}};
 var da = da$2.exports;
 
 var da$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': da
+	__proto__: null,
+	'default': da
 }, [da$2.exports]);
 
 var deAt$2 = {exports: {}};
@@ -2210,8 +2300,8 @@ var deAt$2 = {exports: {}};
 var deAt = deAt$2.exports;
 
 var deAt$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': deAt
+	__proto__: null,
+	'default': deAt
 }, [deAt$2.exports]);
 
 var deCh$2 = {exports: {}};
@@ -2223,8 +2313,8 @@ var deCh$2 = {exports: {}};
 var deCh = deCh$2.exports;
 
 var deCh$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': deCh
+	__proto__: null,
+	'default': deCh
 }, [deCh$2.exports]);
 
 var de$2 = {exports: {}};
@@ -2236,8 +2326,8 @@ var de$2 = {exports: {}};
 var de = de$2.exports;
 
 var de$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': de
+	__proto__: null,
+	'default': de
 }, [de$2.exports]);
 
 var dv$2 = {exports: {}};
@@ -2249,8 +2339,8 @@ var dv$2 = {exports: {}};
 var dv = dv$2.exports;
 
 var dv$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': dv
+	__proto__: null,
+	'default': dv
 }, [dv$2.exports]);
 
 var el$2 = {exports: {}};
@@ -2262,8 +2352,8 @@ var el$2 = {exports: {}};
 var el = el$2.exports;
 
 var el$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': el
+	__proto__: null,
+	'default': el
 }, [el$2.exports]);
 
 var enAu$2 = {exports: {}};
@@ -2275,8 +2365,8 @@ var enAu$2 = {exports: {}};
 var enAu = enAu$2.exports;
 
 var enAu$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': enAu
+	__proto__: null,
+	'default': enAu
 }, [enAu$2.exports]);
 
 var enGb$2 = {exports: {}};
@@ -2288,8 +2378,8 @@ var enGb$2 = {exports: {}};
 var enGb = enGb$2.exports;
 
 var enGb$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': enGb
+	__proto__: null,
+	'default': enGb
 }, [enGb$2.exports]);
 
 var enIe$2 = {exports: {}};
@@ -2301,8 +2391,8 @@ var enIe$2 = {exports: {}};
 var enIe = enIe$2.exports;
 
 var enIe$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': enIe
+	__proto__: null,
+	'default': enIe
 }, [enIe$2.exports]);
 
 var enIl$2 = {exports: {}};
@@ -2314,8 +2404,8 @@ var enIl$2 = {exports: {}};
 var enIl = enIl$2.exports;
 
 var enIl$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': enIl
+	__proto__: null,
+	'default': enIl
 }, [enIl$2.exports]);
 
 var enIn$2 = {exports: {}};
@@ -2327,8 +2417,8 @@ var enIn$2 = {exports: {}};
 var enIn = enIn$2.exports;
 
 var enIn$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': enIn
+	__proto__: null,
+	'default': enIn
 }, [enIn$2.exports]);
 
 var enNz$2 = {exports: {}};
@@ -2340,8 +2430,8 @@ var enNz$2 = {exports: {}};
 var enNz = enNz$2.exports;
 
 var enNz$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': enNz
+	__proto__: null,
+	'default': enNz
 }, [enNz$2.exports]);
 
 var enSg$2 = {exports: {}};
@@ -2353,8 +2443,8 @@ var enSg$2 = {exports: {}};
 var enSg = enSg$2.exports;
 
 var enSg$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': enSg
+	__proto__: null,
+	'default': enSg
 }, [enSg$2.exports]);
 
 var enTt$2 = {exports: {}};
@@ -2366,8 +2456,8 @@ var enTt$2 = {exports: {}};
 var enTt = enTt$2.exports;
 
 var enTt$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': enTt
+	__proto__: null,
+	'default': enTt
 }, [enTt$2.exports]);
 
 var en$2 = {exports: {}};
@@ -2379,8 +2469,8 @@ var en$2 = {exports: {}};
 var en = en$2.exports;
 
 var en$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': en
+	__proto__: null,
+	'default': en
 }, [en$2.exports]);
 
 var eo$2 = {exports: {}};
@@ -2392,8 +2482,8 @@ var eo$2 = {exports: {}};
 var eo = eo$2.exports;
 
 var eo$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': eo
+	__proto__: null,
+	'default': eo
 }, [eo$2.exports]);
 
 var esDo$2 = {exports: {}};
@@ -2405,8 +2495,8 @@ var esDo$2 = {exports: {}};
 var esDo = esDo$2.exports;
 
 var esDo$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': esDo
+	__proto__: null,
+	'default': esDo
 }, [esDo$2.exports]);
 
 var esMx$2 = {exports: {}};
@@ -2418,8 +2508,8 @@ var esMx$2 = {exports: {}};
 var esMx = esMx$2.exports;
 
 var esMx$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': esMx
+	__proto__: null,
+	'default': esMx
 }, [esMx$2.exports]);
 
 var esPr$2 = {exports: {}};
@@ -2431,8 +2521,8 @@ var esPr$2 = {exports: {}};
 var esPr = esPr$2.exports;
 
 var esPr$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': esPr
+	__proto__: null,
+	'default': esPr
 }, [esPr$2.exports]);
 
 var esUs$2 = {exports: {}};
@@ -2444,8 +2534,8 @@ var esUs$2 = {exports: {}};
 var esUs = esUs$2.exports;
 
 var esUs$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': esUs
+	__proto__: null,
+	'default': esUs
 }, [esUs$2.exports]);
 
 var es$2 = {exports: {}};
@@ -2457,8 +2547,8 @@ var es$2 = {exports: {}};
 var es = es$2.exports;
 
 var es$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': es
+	__proto__: null,
+	'default': es
 }, [es$2.exports]);
 
 var et$2 = {exports: {}};
@@ -2470,8 +2560,8 @@ var et$2 = {exports: {}};
 var et = et$2.exports;
 
 var et$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': et
+	__proto__: null,
+	'default': et
 }, [et$2.exports]);
 
 var eu$2 = {exports: {}};
@@ -2483,8 +2573,8 @@ var eu$2 = {exports: {}};
 var eu = eu$2.exports;
 
 var eu$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': eu
+	__proto__: null,
+	'default': eu
 }, [eu$2.exports]);
 
 var fa$2 = {exports: {}};
@@ -2496,8 +2586,8 @@ var fa$2 = {exports: {}};
 var fa = fa$2.exports;
 
 var fa$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': fa
+	__proto__: null,
+	'default': fa
 }, [fa$2.exports]);
 
 var fi$2 = {exports: {}};
@@ -2509,8 +2599,8 @@ var fi$2 = {exports: {}};
 var fi = fi$2.exports;
 
 var fi$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': fi
+	__proto__: null,
+	'default': fi
 }, [fi$2.exports]);
 
 var fo$2 = {exports: {}};
@@ -2522,8 +2612,8 @@ var fo$2 = {exports: {}};
 var fo = fo$2.exports;
 
 var fo$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': fo
+	__proto__: null,
+	'default': fo
 }, [fo$2.exports]);
 
 var frCh$2 = {exports: {}};
@@ -2535,8 +2625,8 @@ var frCh$2 = {exports: {}};
 var frCh = frCh$2.exports;
 
 var frCh$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': frCh
+	__proto__: null,
+	'default': frCh
 }, [frCh$2.exports]);
 
 var fr$2 = {exports: {}};
@@ -2548,8 +2638,8 @@ var fr$2 = {exports: {}};
 var fr = fr$2.exports;
 
 var fr$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': fr
+	__proto__: null,
+	'default': fr
 }, [fr$2.exports]);
 
 var fy$2 = {exports: {}};
@@ -2561,8 +2651,8 @@ var fy$2 = {exports: {}};
 var fy = fy$2.exports;
 
 var fy$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': fy
+	__proto__: null,
+	'default': fy
 }, [fy$2.exports]);
 
 var ga$2 = {exports: {}};
@@ -2574,8 +2664,8 @@ var ga$2 = {exports: {}};
 var ga = ga$2.exports;
 
 var ga$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': ga
+	__proto__: null,
+	'default': ga
 }, [ga$2.exports]);
 
 var gd$2 = {exports: {}};
@@ -2587,8 +2677,8 @@ var gd$2 = {exports: {}};
 var gd = gd$2.exports;
 
 var gd$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': gd
+	__proto__: null,
+	'default': gd
 }, [gd$2.exports]);
 
 var gl$2 = {exports: {}};
@@ -2600,8 +2690,8 @@ var gl$2 = {exports: {}};
 var gl = gl$2.exports;
 
 var gl$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': gl
+	__proto__: null,
+	'default': gl
 }, [gl$2.exports]);
 
 var gomLatn$2 = {exports: {}};
@@ -2613,8 +2703,8 @@ var gomLatn$2 = {exports: {}};
 var gomLatn = gomLatn$2.exports;
 
 var gomLatn$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': gomLatn
+	__proto__: null,
+	'default': gomLatn
 }, [gomLatn$2.exports]);
 
 var gu$2 = {exports: {}};
@@ -2626,8 +2716,8 @@ var gu$2 = {exports: {}};
 var gu = gu$2.exports;
 
 var gu$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': gu
+	__proto__: null,
+	'default': gu
 }, [gu$2.exports]);
 
 var he$2 = {exports: {}};
@@ -2639,8 +2729,8 @@ var he$2 = {exports: {}};
 var he = he$2.exports;
 
 var he$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': he
+	__proto__: null,
+	'default': he
 }, [he$2.exports]);
 
 var hi$2 = {exports: {}};
@@ -2652,8 +2742,8 @@ var hi$2 = {exports: {}};
 var hi = hi$2.exports;
 
 var hi$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': hi
+	__proto__: null,
+	'default': hi
 }, [hi$2.exports]);
 
 var hr$2 = {exports: {}};
@@ -2665,8 +2755,8 @@ var hr$2 = {exports: {}};
 var hr = hr$2.exports;
 
 var hr$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': hr
+	__proto__: null,
+	'default': hr
 }, [hr$2.exports]);
 
 var ht$2 = {exports: {}};
@@ -2678,8 +2768,8 @@ var ht$2 = {exports: {}};
 var ht = ht$2.exports;
 
 var ht$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': ht
+	__proto__: null,
+	'default': ht
 }, [ht$2.exports]);
 
 var hu$2 = {exports: {}};
@@ -2691,8 +2781,8 @@ var hu$2 = {exports: {}};
 var hu = hu$2.exports;
 
 var hu$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': hu
+	__proto__: null,
+	'default': hu
 }, [hu$2.exports]);
 
 var hyAm$2 = {exports: {}};
@@ -2704,8 +2794,8 @@ var hyAm$2 = {exports: {}};
 var hyAm = hyAm$2.exports;
 
 var hyAm$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': hyAm
+	__proto__: null,
+	'default': hyAm
 }, [hyAm$2.exports]);
 
 var id$2 = {exports: {}};
@@ -2717,8 +2807,8 @@ var id$2 = {exports: {}};
 var id = id$2.exports;
 
 var id$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': id
+	__proto__: null,
+	'default': id
 }, [id$2.exports]);
 
 var is$2 = {exports: {}};
@@ -2730,8 +2820,8 @@ var is$2 = {exports: {}};
 var is = is$2.exports;
 
 var is$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': is
+	__proto__: null,
+	'default': is
 }, [is$2.exports]);
 
 var itCh$2 = {exports: {}};
@@ -2743,8 +2833,8 @@ var itCh$2 = {exports: {}};
 var itCh = itCh$2.exports;
 
 var itCh$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': itCh
+	__proto__: null,
+	'default': itCh
 }, [itCh$2.exports]);
 
 var it$2 = {exports: {}};
@@ -2756,8 +2846,8 @@ var it$2 = {exports: {}};
 var it = it$2.exports;
 
 var it$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': it
+	__proto__: null,
+	'default': it
 }, [it$2.exports]);
 
 var ja$2 = {exports: {}};
@@ -2769,8 +2859,8 @@ var ja$2 = {exports: {}};
 var ja = ja$2.exports;
 
 var ja$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': ja
+	__proto__: null,
+	'default': ja
 }, [ja$2.exports]);
 
 var jv$2 = {exports: {}};
@@ -2782,8 +2872,8 @@ var jv$2 = {exports: {}};
 var jv = jv$2.exports;
 
 var jv$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': jv
+	__proto__: null,
+	'default': jv
 }, [jv$2.exports]);
 
 var ka$2 = {exports: {}};
@@ -2795,8 +2885,8 @@ var ka$2 = {exports: {}};
 var ka = ka$2.exports;
 
 var ka$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': ka
+	__proto__: null,
+	'default': ka
 }, [ka$2.exports]);
 
 var kk$2 = {exports: {}};
@@ -2808,8 +2898,8 @@ var kk$2 = {exports: {}};
 var kk = kk$2.exports;
 
 var kk$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': kk
+	__proto__: null,
+	'default': kk
 }, [kk$2.exports]);
 
 var ko$2 = {exports: {}};
@@ -2821,8 +2911,8 @@ var ko$2 = {exports: {}};
 var ko = ko$2.exports;
 
 var ko$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': ko
+	__proto__: null,
+	'default': ko
 }, [ko$2.exports]);
 
 var ku$2 = {exports: {}};
@@ -2834,8 +2924,8 @@ var ku$2 = {exports: {}};
 var ku = /*@__PURE__*/getDefaultExportFromCjs(ku$2.exports);
 
 var ku$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': ku
+	__proto__: null,
+	'default': ku
 }, [ku$2.exports]);
 
 var ky$2 = {exports: {}};
@@ -2847,8 +2937,8 @@ var ky$2 = {exports: {}};
 var ky = ky$2.exports;
 
 var ky$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': ky
+	__proto__: null,
+	'default': ky
 }, [ky$2.exports]);
 
 var lb$2 = {exports: {}};
@@ -2860,8 +2950,8 @@ var lb$2 = {exports: {}};
 var lb = lb$2.exports;
 
 var lb$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': lb
+	__proto__: null,
+	'default': lb
 }, [lb$2.exports]);
 
 var lo$2 = {exports: {}};
@@ -2873,8 +2963,8 @@ var lo$2 = {exports: {}};
 var lo = lo$2.exports;
 
 var lo$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': lo
+	__proto__: null,
+	'default': lo
 }, [lo$2.exports]);
 
 var lt$2 = {exports: {}};
@@ -2886,8 +2976,8 @@ var lt$2 = {exports: {}};
 var lt = lt$2.exports;
 
 var lt$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': lt
+	__proto__: null,
+	'default': lt
 }, [lt$2.exports]);
 
 var lv$2 = {exports: {}};
@@ -2899,8 +2989,8 @@ var lv$2 = {exports: {}};
 var lv = lv$2.exports;
 
 var lv$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': lv
+	__proto__: null,
+	'default': lv
 }, [lv$2.exports]);
 
 var me$2 = {exports: {}};
@@ -2912,8 +3002,8 @@ var me$2 = {exports: {}};
 var me = me$2.exports;
 
 var me$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': me
+	__proto__: null,
+	'default': me
 }, [me$2.exports]);
 
 var mi$2 = {exports: {}};
@@ -2925,8 +3015,8 @@ var mi$2 = {exports: {}};
 var mi = mi$2.exports;
 
 var mi$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': mi
+	__proto__: null,
+	'default': mi
 }, [mi$2.exports]);
 
 var mk$2 = {exports: {}};
@@ -2938,8 +3028,8 @@ var mk$2 = {exports: {}};
 var mk = mk$2.exports;
 
 var mk$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': mk
+	__proto__: null,
+	'default': mk
 }, [mk$2.exports]);
 
 var ml$2 = {exports: {}};
@@ -2951,8 +3041,8 @@ var ml$2 = {exports: {}};
 var ml = ml$2.exports;
 
 var ml$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': ml
+	__proto__: null,
+	'default': ml
 }, [ml$2.exports]);
 
 var mn$2 = {exports: {}};
@@ -2964,8 +3054,8 @@ var mn$2 = {exports: {}};
 var mn = mn$2.exports;
 
 var mn$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': mn
+	__proto__: null,
+	'default': mn
 }, [mn$2.exports]);
 
 var msMy$2 = {exports: {}};
@@ -2977,8 +3067,8 @@ var msMy$2 = {exports: {}};
 var msMy = msMy$2.exports;
 
 var msMy$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': msMy
+	__proto__: null,
+	'default': msMy
 }, [msMy$2.exports]);
 
 var ms$2 = {exports: {}};
@@ -2990,8 +3080,8 @@ var ms$2 = {exports: {}};
 var ms = ms$2.exports;
 
 var ms$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': ms
+	__proto__: null,
+	'default': ms
 }, [ms$2.exports]);
 
 var mt$2 = {exports: {}};
@@ -3003,8 +3093,8 @@ var mt$2 = {exports: {}};
 var mt = mt$2.exports;
 
 var mt$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': mt
+	__proto__: null,
+	'default': mt
 }, [mt$2.exports]);
 
 var my$2 = {exports: {}};
@@ -3016,8 +3106,8 @@ var my$2 = {exports: {}};
 var my = my$2.exports;
 
 var my$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': my
+	__proto__: null,
+	'default': my
 }, [my$2.exports]);
 
 var nb$2 = {exports: {}};
@@ -3029,8 +3119,8 @@ var nb$2 = {exports: {}};
 var nb = nb$2.exports;
 
 var nb$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': nb
+	__proto__: null,
+	'default': nb
 }, [nb$2.exports]);
 
 var ne$2 = {exports: {}};
@@ -3042,8 +3132,8 @@ var ne$2 = {exports: {}};
 var ne = ne$2.exports;
 
 var ne$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': ne
+	__proto__: null,
+	'default': ne
 }, [ne$2.exports]);
 
 var nlBe$2 = {exports: {}};
@@ -3055,8 +3145,8 @@ var nlBe$2 = {exports: {}};
 var nlBe = nlBe$2.exports;
 
 var nlBe$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': nlBe
+	__proto__: null,
+	'default': nlBe
 }, [nlBe$2.exports]);
 
 var nl$2 = {exports: {}};
@@ -3068,8 +3158,8 @@ var nl$2 = {exports: {}};
 var nl = nl$2.exports;
 
 var nl$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': nl
+	__proto__: null,
+	'default': nl
 }, [nl$2.exports]);
 
 var nn$2 = {exports: {}};
@@ -3081,8 +3171,8 @@ var nn$2 = {exports: {}};
 var nn = nn$2.exports;
 
 var nn$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': nn
+	__proto__: null,
+	'default': nn
 }, [nn$2.exports]);
 
 var ocLnc$2 = {exports: {}};
@@ -3094,8 +3184,8 @@ var ocLnc$2 = {exports: {}};
 var ocLnc = ocLnc$2.exports;
 
 var ocLnc$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': ocLnc
+	__proto__: null,
+	'default': ocLnc
 }, [ocLnc$2.exports]);
 
 var paIn$2 = {exports: {}};
@@ -3107,8 +3197,8 @@ var paIn$2 = {exports: {}};
 var paIn = paIn$2.exports;
 
 var paIn$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': paIn
+	__proto__: null,
+	'default': paIn
 }, [paIn$2.exports]);
 
 var pl$2 = {exports: {}};
@@ -3120,8 +3210,8 @@ var pl$2 = {exports: {}};
 var pl = pl$2.exports;
 
 var pl$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': pl
+	__proto__: null,
+	'default': pl
 }, [pl$2.exports]);
 
 var ptBr$2 = {exports: {}};
@@ -3133,8 +3223,8 @@ var ptBr$2 = {exports: {}};
 var ptBr = ptBr$2.exports;
 
 var ptBr$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': ptBr
+	__proto__: null,
+	'default': ptBr
 }, [ptBr$2.exports]);
 
 var pt$2 = {exports: {}};
@@ -3146,8 +3236,8 @@ var pt$2 = {exports: {}};
 var pt = pt$2.exports;
 
 var pt$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': pt
+	__proto__: null,
+	'default': pt
 }, [pt$2.exports]);
 
 var rn$2 = {exports: {}};
@@ -3159,8 +3249,8 @@ var rn$2 = {exports: {}};
 var rn = rn$2.exports;
 
 var rn$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': rn
+	__proto__: null,
+	'default': rn
 }, [rn$2.exports]);
 
 var ro$2 = {exports: {}};
@@ -3172,8 +3262,8 @@ var ro$2 = {exports: {}};
 var ro = ro$2.exports;
 
 var ro$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': ro
+	__proto__: null,
+	'default': ro
 }, [ro$2.exports]);
 
 var ru$2 = {exports: {}};
@@ -3185,8 +3275,8 @@ var ru$2 = {exports: {}};
 var ru = ru$2.exports;
 
 var ru$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': ru
+	__proto__: null,
+	'default': ru
 }, [ru$2.exports]);
 
 var rw$2 = {exports: {}};
@@ -3198,8 +3288,8 @@ var rw$2 = {exports: {}};
 var rw = rw$2.exports;
 
 var rw$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': rw
+	__proto__: null,
+	'default': rw
 }, [rw$2.exports]);
 
 var sd$2 = {exports: {}};
@@ -3211,8 +3301,8 @@ var sd$2 = {exports: {}};
 var sd = sd$2.exports;
 
 var sd$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': sd
+	__proto__: null,
+	'default': sd
 }, [sd$2.exports]);
 
 var se$2 = {exports: {}};
@@ -3224,8 +3314,8 @@ var se$2 = {exports: {}};
 var se = se$2.exports;
 
 var se$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': se
+	__proto__: null,
+	'default': se
 }, [se$2.exports]);
 
 var si$2 = {exports: {}};
@@ -3237,8 +3327,8 @@ var si$2 = {exports: {}};
 var si = si$2.exports;
 
 var si$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': si
+	__proto__: null,
+	'default': si
 }, [si$2.exports]);
 
 var sk$2 = {exports: {}};
@@ -3250,8 +3340,8 @@ var sk$2 = {exports: {}};
 var sk = sk$2.exports;
 
 var sk$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': sk
+	__proto__: null,
+	'default': sk
 }, [sk$2.exports]);
 
 var sl$2 = {exports: {}};
@@ -3263,8 +3353,8 @@ var sl$2 = {exports: {}};
 var sl = sl$2.exports;
 
 var sl$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': sl
+	__proto__: null,
+	'default': sl
 }, [sl$2.exports]);
 
 var sq$2 = {exports: {}};
@@ -3276,8 +3366,8 @@ var sq$2 = {exports: {}};
 var sq = sq$2.exports;
 
 var sq$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': sq
+	__proto__: null,
+	'default': sq
 }, [sq$2.exports]);
 
 var sr$2 = {exports: {}};
@@ -3289,8 +3379,8 @@ var sr$2 = {exports: {}};
 var sr = sr$2.exports;
 
 var sr$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': sr
+	__proto__: null,
+	'default': sr
 }, [sr$2.exports]);
 
 var srCyrl$2 = {exports: {}};
@@ -3302,8 +3392,8 @@ var srCyrl$2 = {exports: {}};
 var srCyrl = srCyrl$2.exports;
 
 var srCyrl$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': srCyrl
+	__proto__: null,
+	'default': srCyrl
 }, [srCyrl$2.exports]);
 
 var ss$2 = {exports: {}};
@@ -3315,8 +3405,8 @@ var ss$2 = {exports: {}};
 var ss = ss$2.exports;
 
 var ss$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': ss
+	__proto__: null,
+	'default': ss
 }, [ss$2.exports]);
 
 var svFi$2 = {exports: {}};
@@ -3328,8 +3418,8 @@ var svFi$2 = {exports: {}};
 var svFi = svFi$2.exports;
 
 var svFi$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': svFi
+	__proto__: null,
+	'default': svFi
 }, [svFi$2.exports]);
 
 var sv$2 = {exports: {}};
@@ -3341,8 +3431,8 @@ var sv$2 = {exports: {}};
 var sv = sv$2.exports;
 
 var sv$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': sv
+	__proto__: null,
+	'default': sv
 }, [sv$2.exports]);
 
 var sw$2 = {exports: {}};
@@ -3354,8 +3444,8 @@ var sw$2 = {exports: {}};
 var sw = sw$2.exports;
 
 var sw$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': sw
+	__proto__: null,
+	'default': sw
 }, [sw$2.exports]);
 
 var ta$2 = {exports: {}};
@@ -3367,8 +3457,8 @@ var ta$2 = {exports: {}};
 var ta = ta$2.exports;
 
 var ta$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': ta
+	__proto__: null,
+	'default': ta
 }, [ta$2.exports]);
 
 var te$2 = {exports: {}};
@@ -3380,8 +3470,8 @@ var te$2 = {exports: {}};
 var te = te$2.exports;
 
 var te$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': te
+	__proto__: null,
+	'default': te
 }, [te$2.exports]);
 
 var tg$2 = {exports: {}};
@@ -3393,8 +3483,8 @@ var tg$2 = {exports: {}};
 var tg = tg$2.exports;
 
 var tg$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': tg
+	__proto__: null,
+	'default': tg
 }, [tg$2.exports]);
 
 var th$2 = {exports: {}};
@@ -3406,8 +3496,8 @@ var th$2 = {exports: {}};
 var th = th$2.exports;
 
 var th$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': th
+	__proto__: null,
+	'default': th
 }, [th$2.exports]);
 
 var tk$2 = {exports: {}};
@@ -3419,8 +3509,8 @@ var tk$2 = {exports: {}};
 var tk = tk$2.exports;
 
 var tk$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': tk
+	__proto__: null,
+	'default': tk
 }, [tk$2.exports]);
 
 var tlPh$2 = {exports: {}};
@@ -3432,8 +3522,8 @@ var tlPh$2 = {exports: {}};
 var tlPh = tlPh$2.exports;
 
 var tlPh$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': tlPh
+	__proto__: null,
+	'default': tlPh
 }, [tlPh$2.exports]);
 
 var tlh$2 = {exports: {}};
@@ -3445,8 +3535,8 @@ var tlh$2 = {exports: {}};
 var tlh = tlh$2.exports;
 
 var tlh$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': tlh
+	__proto__: null,
+	'default': tlh
 }, [tlh$2.exports]);
 
 var tr$2 = {exports: {}};
@@ -3458,8 +3548,8 @@ var tr$2 = {exports: {}};
 var tr = tr$2.exports;
 
 var tr$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': tr
+	__proto__: null,
+	'default': tr
 }, [tr$2.exports]);
 
 var tzl$2 = {exports: {}};
@@ -3471,8 +3561,8 @@ var tzl$2 = {exports: {}};
 var tzl = tzl$2.exports;
 
 var tzl$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': tzl
+	__proto__: null,
+	'default': tzl
 }, [tzl$2.exports]);
 
 var tzmLatn$2 = {exports: {}};
@@ -3484,8 +3574,8 @@ var tzmLatn$2 = {exports: {}};
 var tzmLatn = tzmLatn$2.exports;
 
 var tzmLatn$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': tzmLatn
+	__proto__: null,
+	'default': tzmLatn
 }, [tzmLatn$2.exports]);
 
 var tzm$2 = {exports: {}};
@@ -3497,8 +3587,8 @@ var tzm$2 = {exports: {}};
 var tzm = tzm$2.exports;
 
 var tzm$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': tzm
+	__proto__: null,
+	'default': tzm
 }, [tzm$2.exports]);
 
 var ugCn$2 = {exports: {}};
@@ -3510,8 +3600,8 @@ var ugCn$2 = {exports: {}};
 var ugCn = ugCn$2.exports;
 
 var ugCn$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': ugCn
+	__proto__: null,
+	'default': ugCn
 }, [ugCn$2.exports]);
 
 var uk$2 = {exports: {}};
@@ -3523,8 +3613,8 @@ var uk$2 = {exports: {}};
 var uk = uk$2.exports;
 
 var uk$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': uk
+	__proto__: null,
+	'default': uk
 }, [uk$2.exports]);
 
 var ur$2 = {exports: {}};
@@ -3536,8 +3626,8 @@ var ur$2 = {exports: {}};
 var ur = ur$2.exports;
 
 var ur$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': ur
+	__proto__: null,
+	'default': ur
 }, [ur$2.exports]);
 
 var uzLatn$2 = {exports: {}};
@@ -3549,8 +3639,8 @@ var uzLatn$2 = {exports: {}};
 var uzLatn = uzLatn$2.exports;
 
 var uzLatn$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': uzLatn
+	__proto__: null,
+	'default': uzLatn
 }, [uzLatn$2.exports]);
 
 var uz$2 = {exports: {}};
@@ -3562,8 +3652,8 @@ var uz$2 = {exports: {}};
 var uz = uz$2.exports;
 
 var uz$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': uz
+	__proto__: null,
+	'default': uz
 }, [uz$2.exports]);
 
 var vi$2 = {exports: {}};
@@ -3575,8 +3665,8 @@ var vi$2 = {exports: {}};
 var vi = vi$2.exports;
 
 var vi$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': vi
+	__proto__: null,
+	'default': vi
 }, [vi$2.exports]);
 
 var xPseudo$2 = {exports: {}};
@@ -3588,8 +3678,8 @@ var xPseudo$2 = {exports: {}};
 var xPseudo = xPseudo$2.exports;
 
 var xPseudo$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': xPseudo
+	__proto__: null,
+	'default': xPseudo
 }, [xPseudo$2.exports]);
 
 var yo$2 = {exports: {}};
@@ -3601,8 +3691,8 @@ var yo$2 = {exports: {}};
 var yo = yo$2.exports;
 
 var yo$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': yo
+	__proto__: null,
+	'default': yo
 }, [yo$2.exports]);
 
 var zhCn$2 = {exports: {}};
@@ -3614,8 +3704,8 @@ var zhCn$2 = {exports: {}};
 var zhCn = zhCn$2.exports;
 
 var zhCn$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': zhCn
+	__proto__: null,
+	'default': zhCn
 }, [zhCn$2.exports]);
 
 var zhHk$2 = {exports: {}};
@@ -3627,8 +3717,8 @@ var zhHk$2 = {exports: {}};
 var zhHk = zhHk$2.exports;
 
 var zhHk$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': zhHk
+	__proto__: null,
+	'default': zhHk
 }, [zhHk$2.exports]);
 
 var zhTw$2 = {exports: {}};
@@ -3640,8 +3730,8 @@ var zhTw$2 = {exports: {}};
 var zhTw = zhTw$2.exports;
 
 var zhTw$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': zhTw
+	__proto__: null,
+	'default': zhTw
 }, [zhTw$2.exports]);
 
 var zh$2 = {exports: {}};
@@ -3653,8 +3743,8 @@ var zh$2 = {exports: {}};
 var zh = zh$2.exports;
 
 var zh$1 = /*#__PURE__*/_mergeNamespaces({
-    __proto__: null,
-    'default': zh
+	__proto__: null,
+	'default': zh
 }, [zh$2.exports]);
 
 export { Datepicker as default };
