@@ -1,5 +1,5 @@
 import React from "react";
-import { ClassNamesTypeProp, Configs, DateRangeType, DateType, DateValueType } from "../types";
+import { ClassNamesTypeProp, Configs, DateRangeType, DateType, DateValueType, PopoverDirectionType } from "../types";
 interface Props {
     primaryColor?: string;
     value: DateValueType;
@@ -28,6 +28,7 @@ interface Props {
     maxDate?: DateType | null;
     disabledDates?: DateRangeType[] | null;
     startWeekOn?: string | null;
+    popoverDirection?: PopoverDirectionType;
 }
 declare const Datepicker: React.FC<Props>;
 export default Datepicker;

@@ -21,5 +21,5 @@ export declare const Arrow: React.ForwardRefExoticComponent<{
 export declare const SecondaryButton: React.FC<Button>;
 export declare const PrimaryButton: React.FC<Button>;
 export declare const RoundedButton: React.FC<Button>;
-export declare const VerticalDash: () => JSX.Element;
+export declare const VerticalDash: () => React.JSX.Element;
 export {};

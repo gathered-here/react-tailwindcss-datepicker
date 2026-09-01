@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import React from "react";
-import { Configs, Period, DateValueType, DateType, DateRangeType, ClassNamesTypeProp } from "../types";
+import { Configs, Period, DateValueType, DateType, DateRangeType, ClassNamesTypeProp, PopoverDirectionType } from "../types";
 interface DatepickerStore {
     input?: React.RefObject<HTMLInputElement>;
     asSingle?: boolean;
@@ -36,6 +36,7 @@ interface DatepickerStore {
     inputId?: string;
     inputName?: string;
     classNames?: Partial<ClassNamesTypeProp> | undefined;
+    popoverDirection?: PopoverDirectionType;
 }
 declare const DatepickerContext: React.Context<DatepickerStore>;
 export default DatepickerContext;

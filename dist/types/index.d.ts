@@ -78,3 +78,4 @@ export type ClassNamesTypeProp = Partial<{
     toggleButton: (p?: object | null | undefined) => string | undefined;
     footer: (p?: object | null | undefined) => string | undefined;
 } & RootClassNamesType>;
+export type PopoverDirectionType = "up" | "down";
