@@ -80,3 +80,5 @@ export type ClassNamesTypeProp = Partial<
         footer: (p?: object | null | undefined) => string | undefined;
     } & RootClassNamesType
 >;
+
+export type PopoverDirectionType = "up" | "down";

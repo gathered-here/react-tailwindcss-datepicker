@@ -42,7 +42,8 @@ const Input: React.FC<Props> = (e: Props) => {
         displayFormat,
         inputId,
         inputName,
-        classNames
+        classNames,
+        popoverDirection
     } = useContext(DatepickerContext);
 
     // UseRefs
@@ -198,9 +199,15 @@ const Input: React.FC<Props> = (e: Props) => {
                 div.classList.remove("hidden");
                 div.classList.add("block");
                 // window.innerWidth === 767
+                const popoverOnUp = popoverDirection === "up";
+                const popoverOnDown = popoverDirection === "down";
+                // Auto mode measures against the viewport, not screen.height,
+                // which shrinks under OS display scaling and flips wrongly.
                 if (
-                    window.innerWidth > 767 &&
-                    window.screen.height - 100 < div.getBoundingClientRect().bottom
+                    popoverOnUp ||
+                    (!popoverOnDown &&
+                        window.innerWidth > 767 &&
+                        div.getBoundingClientRect().bottom > window.innerHeight)
                 ) {
                     div.classList.add("bottom-full");
                     div.classList.add("mb-2.5");
@@ -229,7 +236,7 @@ const Input: React.FC<Props> = (e: Props) => {
                 input.removeEventListener("focus", showCalendarContainer);
             }
         };
-    }, [calendarContainer, arrowContainer]);
+    }, [calendarContainer, arrowContainer, popoverDirection]);
 
     const renderToggleIcon = useCallback(
         (isEmpty: boolean) => {
